@@ -17,6 +17,8 @@ export class CategoryComponent {
  uniqueItems = this.products.filter((item, index, arr) => {
   return index === arr.findIndex(t => t.store === item.store);
 });
+selectedItems = {};
+
 
   ngOnInit(){
     this.route.params.subscribe(params=>{
@@ -35,5 +37,6 @@ export class CategoryComponent {
       return this.products.filter(product => product.category === this.urlCategory);
     }
   }
+
 
 }

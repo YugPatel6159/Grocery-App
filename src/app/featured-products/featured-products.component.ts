@@ -14,6 +14,9 @@ export class FeaturedProductsComponent {
   product = this.service.products;
   groceryList = this.service.groceryList;
  urlCategory:string='';
+ onAdd(){
+  window.scrollTo(0,0)
+ }
   ngOnInit(){
     this.route.params.subscribe(params=>{
       this.urlCategory=params['i']});

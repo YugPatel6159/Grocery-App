@@ -15,6 +15,7 @@ import { ExploreCategoriesComponent } from './explore-categories/explore-categor
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { TrendingItemsComponent } from './trending-items/trending-items.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,
+    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
