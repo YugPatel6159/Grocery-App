@@ -1,0 +1,134 @@
+<!-- <nav class="navbar ">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../assets/logo.png" alt="Bootstrap" width="39" height="39" />
+            <img src="../../assets/Frame 1.png" alt="Bootstrap" width="196" height="44" />
+        </a>
+        <form class="d-flex" role="search">
+            <div class="searchBox">
+                <select name="categories" id="categories" class="border-none" >
+                    <option routerLink="categories/All" value="All_Categories" class="border-none">All Categories</option>
+                    <option value="All_Categories" class="border-none" *ngFor="let i of uniqueCategories">
+                        {{i.category}}
+                    </option>
+                </select>
+                <input class="form-control me-2 border-none" type="search" placeholder="Search for items.."
+                    aria-label="Search" />
+                <button class="btn btn-outline-success " type="submit">
+                    <i class="fa fa-search green-color"></i>
+                </button>
+            </div>
+            <div class="cart">
+                <button class="btn btn-outline-success border-none" type="submit" disabled>
+                    <i class="fas fa-cart-arrow-down green-color"></i>
+                </button>
+                <div class="cart-info">
+                    <select name="myCart" id="myCart" class="border-none">
+                        <option value="myCart" selected class="border-none">my cart</option>
+                    </select>
+                    <p class="total">$21</p>
+                </div>
+                <div>
+                    <select name="profile" id="profile" class="border-none">
+                        <option value="name" selected>Pritee Mehta</option>
+                        <option value="profile">Profile</option>
+                        <option value="logout">Logout</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+</nav>
+<hr class="container">
+<nav>
+    <div class="container2 text-success">
+        <a routerLink="categories/All">
+            <button class="btn btn-success category"><i class="fa-solid fa-grid-2"></i> Browse all categories</button>
+        </a>
+        <div>   
+            <span class="helpline">
+                <i class="fas fa-phone green-color"></i>1233-7777
+            </span>
+            <span class="support">24/7 support center</span>
+        </div>
+
+    </div>
+</nav> -->
+<div class="container">
+  <div class="main-logo">
+    <a class="navbar-brand" routerLink="">
+      <img src="../assets/logo.png" alt="Bootstrap" width="39" height="39" />
+      <img
+        src="../../assets/Frame 1.png"
+        alt="Bootstrap"
+        width="196"
+        height="44"
+      />
+    </a>
+  </div>
+  <div class="searchBox">
+    <select name="categories" id="categories" class="border-none">
+      <option
+        routerLink="categories/All"
+        value="All_Categories"
+        class="border-none"
+      >
+        All Categories
+      </option>
+      <option
+        value="All_Categories"
+        class="border-none"
+        *ngFor="let i of uniqueCategories"
+      >
+        {{ i.category }}
+      </option>
+    </select>
+    <input
+      class="form-control border-none"
+      type="search"
+      placeholder="Search for items.."
+      aria-label="Search"
+    />
+    <button class="btn btn-outline-success" type="submit">
+      <i class="fa fa-search green-color"></i>
+    </button>
+  </div>
+  <div class="cart">
+    <i class="fas fa-cart-arrow-down"></i>
+    <div class="cart-info">
+      <div class="myCart">
+        <select name="myCart" id="myCart" class="border-none">
+          <option value="myCart" selected class="border-none">my cart</option>
+        </select>
+      </div>
+      <div class="total">
+        <span>{{ 12 | currency }}</span>
+      </div>
+      <span class="totalProducts">1</span>
+    </div>
+  </div>
+  <div class="profile">
+    <select name="profile" id="profile" class="border-none">
+      <option value="name" selected>Pritee Mehta</option>
+      <option value="profile">Profile</option>
+      <option value="logout">Logout</option>
+    </select>
+  </div>
+</div>
+  <div class="container2 text-success">
+    <a routerLink="categories/All">
+      <button class="btn btn-success category">
+        <i class="fa-solid fa-grid-2"></i> Browse all categories
+      </button>
+    </a>
+    <div>
+      <div>
+        <span class="helpline">
+          <i class="fas fa-phone green-color"></i>1233-7777
+        </span>
+        <span class="support">24/7 support center</span>
+      </div>
+    </div>
+  </div>
+

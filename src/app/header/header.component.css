@@ -1,0 +1,70 @@
+.searchBox{
+    width: 500px;
+    display: flex;
+    padding: 10px 10px;
+}
+.border-none{
+    border: none;
+}
+.green-color{
+    color: #3BB77E;
+}
+.cart{
+    /* width: 120px; */
+    display: flex;
+    height: 50px;
+    margin-left: 70px;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+}
+.total{
+    color: greenyellow;
+    justify-content: center;
+    text-align: center;
+}
+.cart-size{
+    width:70px;
+}
+.container{
+    justify-content: space-between;
+    margin-top: 20px;
+    display: flex;
+}
+.btn{
+    margin-left: 10px;
+    margin-right: none;
+}
+#profile{
+    margin-left: 80px;
+}
+.category{  
+    padding: 10px 10px;
+    font-size: large;
+}
+.helpline{
+    margin-left: 500px;
+}
+.container2{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+.support{
+    margin-left: 10px;
+}
+input{
+    background-color: rgb(218, 210, 210);
+}
+.profile{
+    margin-top:15px
+}
+.totalProducts{
+    position: relative;
+    top: -38px;
+    left: -38px;
+    background-color: #3BB77E;
+    border-radius: 50%;
+    font-size: small;
+    color: aliceblue;
+}
