@@ -11,6 +11,9 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {
     path:'categories/:i', component:CategoryComponent
+  },
+  {
+    path:'search-categories/:i', component:CategoryComponent
   }
   
 ];

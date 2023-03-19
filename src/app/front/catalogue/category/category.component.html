@@ -10,13 +10,14 @@
     <div class="option">
       <ul>
         <p style="font-size: 16px;">Brand</p>
-        <li *ngFor="let i of uniqueItems" ><input type="checkbox" name="Brand" id="amul" value="amul">{{i.store}}</li>
+        <li *ngFor="let i of uniqueItems" >
+          <input type="checkbox" (change)="storeArray($event)" #brand name="Brand" id="amul" value="{{i}}">{{i}}</li>
       </ul>
     </div>
   </div>
 </div>
 <div class="container" >
-      <div class="card" *ngFor="let i of filteredProducts">
+      <div class="card" *ngFor="let i of getProducts()">
         <!-- <div *ngIf="i.category= vegetables"> -->
           <img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" />
           <div class="card-body">
@@ -29,7 +30,7 @@
                 [style.text-decoration]="i.discountPrice ? 'line-through' : 'none'">
                 {{i.price | currency}}
               </span></span>
-              <a href="#" class="btn"><i class="fas fa-cart-arrow-down"></i>Add</a>
+              <a routerLink="" class="btn"><i class="fas fa-cart-arrow-down"></i>Add</a>
             </div>
           </div>
         </div>

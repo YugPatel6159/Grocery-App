@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Route } from '@angular/router';
 import { Grocery } from './interface';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { Grocery } from './interface';
 })
 export class ProductService {
 
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
  
   products = [
     {
@@ -343,7 +344,60 @@ export class ProductService {
         imageUrl:"../../assets/Rectangle 19.png"
       }
     ];
-    uniqueItems = this.groceryList.filter((item, index, arr) => {
+    
+     uniqueCategory:Grocery[] = this.groceryList.filter((item, index, arr) => {
       return index === arr.findIndex(t => t.category === item.category);
     });
+
+
+    filteredProducts(duplicateProducts:any, urlCategory:string) {
+      if (urlCategory == "All") {
+        return duplicateProducts;
+      } else {
+        return duplicateProducts.filter((product:any) => product.category === urlCategory);
+      }
+    }
+    
+    //  this function is for unique stores from filtered stores
+    
+  storesFilterData(urlCategory:string){
+   let stores: string[]=[];
+  const products = this.filteredProducts(this.groceryList, urlCategory);
+  products.forEach((element:any) => {
+    if(!stores.includes(element.store)){
+      stores.push(element.store)
+    }
+  });
+  // console.log(stores);
+  return stores;
 }
+searchTerm: string = ''; 
+filteredProductsBasedOnCategory:Grocery[]=[];
+// get products based on the category
+filterProducts(searchTerm:string): Grocery[] {
+  console.log(this.groceryList.filter(product =>
+    product.grocery_name.toLowerCase().includes(searchTerm.toLowerCase())
+  ))
+  this.filteredProductsBasedOnCategory = this.groceryList.filter(product =>
+    product.grocery_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  return this.groceryList.filter(product =>
+    product.grocery_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+}
+selectedCategory:string='';
+
+// getProducts() {
+//   let products = this.groceryList;
+
+//   if (this.category && this.category != "") {
+//     products = products.filter(p => p.category == this.category);
+//   }
+
+//   if (this.searchTerm && this.searchTerm != "") {
+//     products = products.filter(p => p.grocery_name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+//   }
+
+//   return products;
+// }
+  }

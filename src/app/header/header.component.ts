@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryComponent } from '../front/catalogue/category/category.component';
+import { Grocery } from '../shared/interface';
 import { ProductService } from '../shared/product.service';
 
 @Component({
@@ -6,10 +9,32 @@ import { ProductService } from '../shared/product.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-constructor(private service:ProductService){
-}
-optionCategory=this.service.groceryList;
 
-uniqueCategories = this.service.uniqueItems;
+
+export class HeaderComponent implements OnInit {
+constructor(private service:ProductService, private router:Router, private Route:ActivatedRoute){
+}
+// groceryList:Grocery[] = this.service.groceryList
+optionCategory:Grocery[]=this.service.groceryList;
+uniqueCategories:Grocery[]= this.service.uniqueCategory;
+category:string='';
+searchTerm: string = ''; 
+
+ngOnInit(){
+this.service.selectedCategory = this.category;
+}
+
+onSubmit() {
+  this.service.filterProducts(this.searchTerm)
+  this.service.searchTerm=this.searchTerm;
+  const route = `/search-categories/${this.category === 'All categories' ? 'All' : this.category}`;
+  this.router.navigate([route]);
+}
+
+// selectedCategory(event:any){
+//   console.log(event.target.value);
+//   this.service.selectedCategory = event.target.value;
+// }
+
+
 }

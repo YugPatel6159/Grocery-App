@@ -1,18 +1,19 @@
   <nav class="main">
     <div class="container d-flex">
       <div class="logoPart">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="">
           <img src="../assets/logo.png" alt="Bootstrap" width="32" height="35">
           <img src="../../assets/Frame 1.png" alt="Bootstrap" width="196" height="44">
         </a>
       </div>
       <div class="searchPart d-flex ">
-        <select name="categories" id="" class="form-select border border-end-0 rounded-0 categoriesPart">
-          <option value="">All categories</option>
-          <option value="option1" *ngFor="let i of uniqueCategories">{{i.category}}</option>
+        <select name="categories" id="" class="form-select border border-end-0 rounded-0 categoriesPart" [(ngModel)]="category">
+          <option value="All" selected >All categories</option>
+          <option value="option1" *ngFor="let i of uniqueCategories" value="{{i.category}}" >{{i.category}}</option>
         </select>
-        <input  class="form-control border border-start-0 rounded-0 search-input"type="text" name="search" id="" placeholder="search for items">
-        <button class="btn searchBtn "><i class="fa fa-search"></i></button>
+        <input  class="form-control border border-start-0 rounded-0 search-input"type="text" name="search" placeholder="search for items" [(ngModel)]="searchTerm">
+        
+        <button class="btn searchBtn" (click)="onSubmit()"><i class="fa fa-search"></i></button>
       </div>
       <div class="cartPart d-flex ">
       <div>
@@ -36,7 +37,7 @@
     </div>
     <div class="container d-flex mt-5">
       <div class="allCatBtn">
-        <a routerLink="categories/All">
+        <a [routerLink]="['categories/All']">
           <button class="btn btn-success rounded-0">
             <i class="fa-solid fa-grid-2"></i> Browse all categories
           </button>

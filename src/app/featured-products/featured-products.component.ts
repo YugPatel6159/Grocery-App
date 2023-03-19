@@ -20,6 +20,7 @@ export class FeaturedProductsComponent {
   ngOnInit(){
     this.route.params.subscribe(params=>{
       this.urlCategory=params['i']});
+      window.scrollTo(0,0)
   }
   ngAfterViewInit(){
     const swiper = new Swiper(".swiper-container", {

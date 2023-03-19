@@ -18,6 +18,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,10 +30,11 @@ import { FormsModule } from '@angular/forms';
     FeaturedProductsComponent,
     TrendingItemsComponent,
     ProductCardComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,FormsModule
+    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,FormsModule,FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
