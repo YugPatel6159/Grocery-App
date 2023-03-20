@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductService } from '../shared/product.service';
 
 @Component({
   selector: 'app-trending-items',
@@ -6,19 +7,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./trending-items.component.css']
 })
 export class TrendingItemsComponent {
+  constructor(private service:ProductService){}
+  
+  topRatedProducts = this.service.sortGroceriesByRating();
   products = [
     {
-      img:"../assets/peach.png",
+      img:"../../assets/image 3.png",
       category:"peach",
       numberOfItems:"20"
     },
     {
-      img:"../assets/peach.png",
+      img:"../../assets/image 3.png",
       category:"peach",
       numberOfItems:"20"
     },
     {
-      img:"../assets/peach.png",
+      img:"../../assets/image 3.png",
       category:"peach",
       numberOfItems:"20"
     }

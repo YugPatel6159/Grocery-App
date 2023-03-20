@@ -97,6 +97,7 @@ export class CategoryComponent implements OnInit {
         (p) => p.category == this.proService.selectedCategory
       );
     }
+    
 
     if (this.proService.searchTerm && this.proService.searchTerm != '') {
       products = products.filter((p) =>
@@ -118,5 +119,17 @@ export class CategoryComponent implements OnInit {
   filterToggle = false;
   display() {
     this.filterToggle = !this.filterToggle;
+  }
+
+  // add products to cart
+  cartArray: any[] = [];
+
+  addProductToCart(product: any) {
+    const tempProduct = product;
+    if (!this.cartArray) {
+      this.cartArray = [];
+    }
+    this.cartArray.push(tempProduct);
+    console.log(this.cartArray);
   }
 }

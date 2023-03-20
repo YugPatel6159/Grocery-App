@@ -30,11 +30,4 @@ onSubmit() {
   const route = `/search-categories/${this.category === 'All categories' ? 'All' : this.category}`;
   this.router.navigate([route]);
 }
-
-// selectedCategory(event:any){
-//   console.log(event.target.value);
-//   this.service.selectedCategory = event.target.value;
-// }
-
-
 }

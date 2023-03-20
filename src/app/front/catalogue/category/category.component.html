@@ -18,7 +18,7 @@
 </div>
 <div class="container" >
       <div class="card" *ngFor="let i of getProducts()">
-        <!-- <div *ngIf="i.category= vegetables"> -->
+
           <img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" />
           <div class="card-body">
             <small class="card-title">{{i.category}}</small>
@@ -30,10 +30,10 @@
                 [style.text-decoration]="i.discountPrice ? 'line-through' : 'none'">
                 {{i.price | currency}}
               </span></span>
-              <a routerLink="" class="btn"><i class="fas fa-cart-arrow-down"></i>Add</a>
+              <a class="btn" (click)="addProductToCart(i)"><i class="fas fa-cart-arrow-down"></i>Add</a>
             </div>
           </div>
         </div>
       </div>
-<!-- </div> -->
+
 

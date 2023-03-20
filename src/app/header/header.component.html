@@ -9,7 +9,7 @@
       <div class="searchPart d-flex ">
         <select name="categories" id="" class="form-select border border-end-0 rounded-0 categoriesPart" [(ngModel)]="category">
           <option value="All" selected >All categories</option>
-          <option value="option1" *ngFor="let i of uniqueCategories" value="{{i.category}}" >{{i.category}}</option>
+          <option *ngFor="let i of uniqueCategories" value="{{i.category}}" >{{i.category}}</option>
         </select>
         <input  class="form-control border border-start-0 rounded-0 search-input"type="text" name="search" placeholder="search for items" [(ngModel)]="searchTerm">
         

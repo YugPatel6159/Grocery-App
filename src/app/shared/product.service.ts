@@ -387,6 +387,17 @@ filterProducts(searchTerm:string): Grocery[] {
 }
 selectedCategory:string='';
 
+ sortGroceriesByRating(): Grocery[] {
+  let sortedGroceries = this.groceryList.sort((a, b) => {
+    if (a.rating !== undefined && b.rating !== undefined) {
+      return b.rating - a.rating;
+    }
+    // handle the case when one or both ratings are undefined
+    // for example, you can sort by name or price instead
+    return a.grocery_name.localeCompare(b.grocery_name);
+  });
+  return sortedGroceries.slice(0,3);
+}
 // getProducts() {
 //   let products = this.groceryList;
 
