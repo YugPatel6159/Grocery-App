@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryComponent } from '../front/catalogue/category/category.component';
+import { CartService } from '../shared/cart.service';
 import { Grocery } from '../shared/interface';
 import { ProductService } from '../shared/product.service';
 
@@ -12,16 +13,20 @@ import { ProductService } from '../shared/product.service';
 
 
 export class HeaderComponent implements OnInit {
-constructor(private service:ProductService, private router:Router, private Route:ActivatedRoute){
+constructor(private service:ProductService,private cartService:CartService, private router:Router, private Route:ActivatedRoute){
 }
 // groceryList:Grocery[] = this.service.groceryList
 optionCategory:Grocery[]=this.service.groceryList;
 uniqueCategories:Grocery[]= this.service.uniqueCategory;
 category:string='';
-searchTerm: string = ''; 
+searchTerm: string = '';
+cartLength:number=0; 
 
 ngOnInit(){
 this.service.selectedCategory = this.category;
+this.cartService.cartItem.subscribe((res)=>{
+  this.cartLength = res.length;
+})
 }
 
 onSubmit() {
@@ -30,4 +35,5 @@ onSubmit() {
   const route = `/search-categories/${this.category === 'All categories' ? 'All' : this.category}`;
   this.router.navigate([route]);
 }
+
 }

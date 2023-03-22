@@ -398,6 +398,7 @@ selectedCategory:string='';
   });
   return sortedGroceries.slice(0,3);
 }
+
 // getProducts() {
 //   let products = this.groceryList;
 
@@ -411,4 +412,13 @@ selectedCategory:string='';
 
 //   return products;
 // }
+   matchProduct(id:number){
+    console.log(id);
+    let products = this.groceryList.find((res)=>{
+      return res.id === id;
+    })
+    return products;
+   }
   }
+
+

@@ -6,7 +6,7 @@
         </span>
         <div class="trend-card" *ngFor="let category of products">
             <div>
-                <img src="../../assets/image 3.png" alt="">
+               <a [routerLink]="['top-sells',category.category]"> <img src="../../assets/image 3.png" alt=""></a>
             </div>
             <div>
                 <h6>Orange</h6>
@@ -22,7 +22,7 @@
         </span>
         <div class="trend-card" *ngFor="let product of topRatedProducts">
             <div>
-                <img [src]="product.imageUrl" height="101px" width="101px" alt="">
+               <a [routerLink]="['top-rated',product.grocery_name]"> <img [src]="product.imageUrl" height="101px" width="101px" alt=""></a>
             </div>
             <div>
                 <h6>{{product.grocery_name}}</h6>
@@ -41,7 +41,7 @@
         </span>
         <div class="trend-card" *ngFor="let category of products">
             <div>
-                <img src="../../assets/image 3.png" alt="">
+                <a [routerLink]="['trending-items',category.category]"><img src="../../assets/image 3.png" alt=""></a>
             </div>
             <div>
                 <h6>Orange</h6>
@@ -57,7 +57,7 @@
         </span>
         <div class="trend-card" *ngFor="let category of products">
             <div>
-                <img src="../../assets/image 3.png" alt="">
+                <a [routerLink]="['recently-added',category.category]"><img src="../../assets/image 3.png" alt=""></a>
             </div>
             <div>
                 <h6>Orange</h6>

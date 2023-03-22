@@ -14,7 +14,7 @@
 <div class="container swiper-container">
     <div class="swiper-wrapper">
         <div class="swiper-slide cat-card" *ngFor="let i of groceryList">
-            <img [src]="i.imageUrl" alt="">
+           <a [routerLink]="['featured-products',i.grocery_name]"> <img [src]="i.imageUrl" alt=""> </a>
             <h6>{{i.category}}</h6>
             <h6> {{i.grocery_name}}   </h6>
             <span>By <span class="text-success">{{i.store}}</span></span><br>

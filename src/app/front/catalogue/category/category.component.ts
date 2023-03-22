@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { Grocery } from 'src/app/shared/interface';
 import { ProductService } from 'src/app/shared/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from 'src/app/shared/cart.service';
 
 @Component({
   selector: 'app-category',
@@ -12,11 +13,12 @@ import { ActivatedRoute } from '@angular/router';
 export class CategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private proService: ProductService
+    private proService: ProductService,
+    private cartService:CartService
   ) {}
-  products = this.proService.groceryList;
+  products:Grocery[] = this.proService.groceryList;
   urlCategory: string = '';
-  uniqueItems: any;
+  uniqueItems:string[]=[];
   filteredProducts = this.proService.filteredProducts;
   filteredProductsBasedOnCategory =
     this.proService.filteredProductsBasedOnCategory;
@@ -30,7 +32,6 @@ export class CategoryComponent implements OnInit {
       );
       this.uniqueItems = this.storesFilterData();
     });
-
     window.scrollTo(0, 0);
   }
 
@@ -48,11 +49,11 @@ export class CategoryComponent implements OnInit {
     return stores;
   }
 
-  selectedStore: any = [];
+  selectedStore: string[] = [];
 
   // this function is for checkbox
 
-  storeArray(event: any) {
+  storeArray(event:any) {
     const brandValue = event.target.value;
 
     // if users check the checkbox
@@ -97,8 +98,6 @@ export class CategoryComponent implements OnInit {
         (p) => p.category == this.proService.selectedCategory
       );
     }
-    
-
     if (this.proService.searchTerm && this.proService.searchTerm != '') {
       products = products.filter((p) =>
         p.grocery_name
@@ -116,20 +115,28 @@ export class CategoryComponent implements OnInit {
 
   // this is for displaying filter box
 
-  filterToggle = false;
+  filterToggle:boolean = false;
   display() {
     this.filterToggle = !this.filterToggle;
   }
 
   // add products to cart
-  cartArray: any[] = [];
+  cartArray:any;
 
-  addProductToCart(product: any) {
-    const tempProduct = product;
-    if (!this.cartArray) {
-      this.cartArray = [];
-    }
-    this.cartArray.push(tempProduct);
-    console.log(this.cartArray);
+
+  // add product to cart in product.json
+
+  addProductToCart(product: Grocery) {
+    
+    // this.cartService.addProductToCart(product).subscribe(res=>{
+    //   console.log(res);
+    //   // this.cartArray.push(res);
+    // })
+    // let cartProduct = this.proService.matchProduct(product.id);
+    this.cartArray=this.cartService.getProducts(product);
+    console.log(this.cartArray)
+    // this.cartService.myBehaviorSubject.next(this.cartArray);
+    this.cartService.cartItem.next(this.cartArray);
   }
+  
 }

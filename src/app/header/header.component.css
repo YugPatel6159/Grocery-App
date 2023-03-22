@@ -35,3 +35,7 @@ border-radius: 50%;
 .green-color{
     color: #3BB77E;
 }
+.cart{
+    text-decoration: none;
+    color:black;
+}

@@ -16,7 +16,7 @@
 }
 a{
     text-decoration: none;
-    margin: 13px;
+    margin: 0px;
     color: black;
 }
 .cat-card{
@@ -37,3 +37,4 @@ cursor: pointer;
 .btn{
     background-color:#3BB77E;
 }
+

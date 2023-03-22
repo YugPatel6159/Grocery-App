@@ -1,0 +1,59 @@
+<div class="category-header mt-5">
+    <h2>My Cart</h2>
+</div>
+<!-- {{cartArray[0].price}} -->
+<div class="container">
+    <div class="row "  >
+        <div class="col-md-6 mt-5" *ngFor="let product of cartArray" >
+            <div class="col-md-5">
+                <img class=" width border" src={{product.imageUrl}} alt="">
+            </div>
+            <div class="col-md-5">
+                <div class="d-flex product-name">
+                    <h3>{{product.grocery_name}}</h3>
+                    <i class="fa-solid fa-xmark fa-xl" (click)="removeProduct(product.id)"></i>
+                </div>  
+        <div>
+            <span class="color">{{product.quantity}}</span>
+        </div>
+        <div class="d-flex product-name mt-4">
+            <div class="col ">
+                <span ><i class="fa-solid fa-minus" (click)="minus(product)"></i></span>
+                <span class="quantity"><input type="text" id="number" class="number" name="number" value="{{product.quantityCount}}" disabled></span>
+                <span class="quantity"><i class="fa-solid fa-plus" (click)="plus(product)"></i></span>
+            </div>
+            <span class="green">{{product.subtotal | currency}}</span>
+    </div>
+    <hr class="mt-4 ">
+</div>
+</div>
+<div class="checkout col-md-5 d-flex justify-content-evenly">
+    <div class="justify-content-evenly mt-5">
+        <div>
+            <h2>Sub-total</h2>
+        </div>
+        <div>
+            <h2>GST</h2>
+        </div>
+        <div>
+            <h2>Grand-total</h2>
+        </div>
+    </div>
+    <div class=" mt-5">
+        
+        <div>
+            <h2>{{12.97 | currency}}</h2>
+        </div>
+        <div>
+            <h2>{{0.91| currency}}</h2>
+        </div>
+        <div>
+            <h2>{{13.88 | currency}}</h2>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <button class="btn btn-success">Checkout</button>
+</div>
+</div>
+</div>

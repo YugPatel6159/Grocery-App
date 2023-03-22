@@ -16,10 +16,10 @@
     </div>
   </div>
 </div>
+
 <div class="container" >
       <div class="card" *ngFor="let i of getProducts()">
-
-          <img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" />
+          <a [routerLink]="['product-details',i.id,i.grocery_name]"><img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" /></a>
           <div class="card-body">
             <small class="card-title">{{i.category}}</small>
             <h5 class="grocery-name">{{i.grocery_name}}</h5>

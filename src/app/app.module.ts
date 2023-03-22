@@ -14,8 +14,8 @@ import { CatalogueModule } from './front/catalogue/catalogue.module';
 import { ExploreCategoriesComponent } from './explore-categories/explore-categories.component';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { TrendingItemsComponent } from './trending-items/trending-items.component';
-import { ProductCardComponent } from './product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -29,12 +29,11 @@ import { FormsModule } from '@angular/forms';
     ExploreCategoriesComponent,
     FeaturedProductsComponent,
     TrendingItemsComponent,
-    ProductCardComponent,
 
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,FormsModule,FormsModule
+    AppRoutingModule,FrontModule,AdminModule,UserModule,CatalogueModule,FormsModule,FormsModule,HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
