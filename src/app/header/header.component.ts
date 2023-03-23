@@ -20,12 +20,16 @@ optionCategory:Grocery[]=this.service.groceryList;
 uniqueCategories:Grocery[]= this.service.uniqueCategory;
 category:string='';
 searchTerm: string = '';
-cartLength:number=0; 
+cartLength:number=0;
+grandTotal =0; 
 
 ngOnInit(){
 this.service.selectedCategory = this.category;
 this.cartService.cartItem.subscribe((res)=>{
   this.cartLength = res.length;
+})
+this.cartService.subTotal.subscribe(res=>{
+  this.grandTotal = res
 })
 }
 
@@ -34,6 +38,7 @@ onSubmit() {
   this.service.searchTerm=this.searchTerm;
   const route = `/search-categories/${this.category === 'All categories' ? 'All' : this.category}`;
   this.router.navigate([route]);
+  this.searchTerm='';
 }
 
 }

@@ -4,6 +4,7 @@ import { Grocery } from 'src/app/shared/interface';
 import { ProductService } from 'src/app/shared/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/shared/cart.service';
+import { partition } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -60,6 +61,7 @@ export class CategoryComponent implements OnInit {
 
     if (event.target.checked) {
       this.selectedStore.push(brandValue);
+      console.log("selected store from filter",this.selectedStore)
     }
 
     // if user uncheck
@@ -105,11 +107,6 @@ export class CategoryComponent implements OnInit {
           .includes(this.proService.searchTerm.toLowerCase())
       );
     }
-    const path = window.location.pathname;
-    const match = path.match('^/categories/All$');
-    if (match) {
-      products = this.proService.groceryList;
-    }
     return products;
   }
 
@@ -137,6 +134,18 @@ export class CategoryComponent implements OnInit {
     console.log(this.cartArray)
     // this.cartService.myBehaviorSubject.next(this.cartArray);
     this.cartService.cartItem.next(this.cartArray);
+    
+    
+    localStorage.setItem('cart',JSON.stringify(this.cartArray));
+    let cart = localStorage.getItem('cart')
+
+  if(cart){
+   console.log('ls',JSON.parse(cart));
+    this.cartService.cart.next(JSON.parse(cart));
+  }
+  else{
+    console.log('else partition')
+  }
   }
   
 }

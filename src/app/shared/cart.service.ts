@@ -15,12 +15,9 @@ export class CartService {
   productUrl=environment.baseUrl;
   myBehaviorSubject = new BehaviorSubject<Grocery[]>([]);
   cartItem = new BehaviorSubject<CartItem[]>([]);
-  plus(){
-    // return this.existingProduct.quantityCount += 1;
-  }
-  minus(){
-    // return this.existingProduct.quantityCount-=1;
-  }
+  subTotal = new Subject<number>();
+  cart = new Subject<any>();
+  
   addProductToCart(product:any){
     return this.http.post(this.productUrl,product);
   }
@@ -44,6 +41,7 @@ export class CartService {
    const existingItem = this.cartArray.find(res=> { 
     return res.id===cartItem.id
   })
+
   this.existingProduct = existingItem;
    console.log(existingItem);
    if(!existingItem){

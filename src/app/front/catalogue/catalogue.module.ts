@@ -7,6 +7,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { CartComponent } from './cart/cart.component';
     CategoryComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,

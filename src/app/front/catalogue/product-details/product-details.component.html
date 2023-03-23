@@ -25,12 +25,12 @@
             <div class="d-flex product-name mt-5">
                 <div class="col-md-6 ">
                     <span ><i class="fa-solid fa-minus" (click)="minus()"></i></span>
-                    <span class="quantity"><input type="text" id="number" class="number" name="number" value="{{count}}" disabled></span>
+                    <span class="quantity"><input type="text" id="number" class="number" name="number" value="{{quantityCount}}" disabled></span>
                     <span class="quantity"><i class="fa-solid fa-plus" (click)="plus()"></i></span>
                 </div>
-                <span class="green">{{matchedProduct?.discountPrice | currency}} &nbsp;<span class="original-price"
-                    [style.text-decoration]="matchedProduct.discountPrice ? 'line-through' : 'none'">
-                    {{matchedProduct.price | currency}}
+                <span class="green">{{discPrice | currency}} &nbsp;<span class="original-price"
+                    [style.text-decoration]="discPrice ? 'line-through' : 'none'">
+                    {{price | currency}}
                   </span></span>
             </div>
             <hr class="mt-5 ">

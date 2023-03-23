@@ -18,7 +18,7 @@ export class ProductDetailsComponent implements OnInit {
   matchedProduct:any;
   price: any;
   discPrice:any;
-  count=1;
+  quantityCount:number=1;
   
   ngOnInit(){
     this.route.params.subscribe((res)=>{
@@ -31,26 +31,21 @@ export class ProductDetailsComponent implements OnInit {
     this.discPrice = this.matchedProduct.discountedPrice;
   }
   minus(){
-    if(this.count>=1){
-      this.count = this.count-1;
-    
-    if(this.matchedProduct.discountedPrice==null){
-      this.matchedProduct.price -= this.price; 
+    if(this.quantityCount>=1){
+
+      this.quantityCount-=1;
+      this.price = this.price - this.matchedProduct.price;
+      this.discPrice = this.discPrice - this.matchedProduct.discountedPrice;
     }
-    else{
-     this.matchedProduct.discountedPrice-= this.discPrice;
-    }
-  }
 }
   plus(){
-    this.count=this.count+1;
+    if(this.quantityCount>=0){
+      this.quantityCount+=1;
+      this.price = this.price + this.matchedProduct.price;
+      this.discPrice = this.discPrice + this.matchedProduct.discountedPrice;
+    }
 
-    if(this.matchedProduct.discountedPrice==null){
-      this.matchedProduct.price +=this.price; 
-    }
-    else{
-      this.matchedProduct.discountedPrice += this.discPrice;
-    }
+
   }
   
 }
