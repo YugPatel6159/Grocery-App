@@ -28,9 +28,16 @@ this.service.selectedCategory = this.category;
 this.cartService.cartItem.subscribe((res)=>{
   this.cartLength = res.length;
 })
-this.cartService.subTotal.subscribe(res=>{
+this.cartService.subTotal$.subscribe(res=>{
   this.grandTotal = res
 })
+}
+categoryChange(event:any){
+  this.category=event.target.value
+}
+allCategories(){
+  this.router.navigate(['categories/All']);
+  this.service.allProducts.next(this.service.groceryList);
 }
 
 onSubmit() {
@@ -40,5 +47,7 @@ onSubmit() {
   this.router.navigate([route]);
   this.searchTerm='';
 }
+
+
 
 }

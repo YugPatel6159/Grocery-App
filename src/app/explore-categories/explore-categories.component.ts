@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swiper from 'swiper';
 import { ProductService } from '../shared/product.service';
 
@@ -9,7 +9,7 @@ import { ProductService } from '../shared/product.service';
   styleUrls: ['./explore-categories.component.css'],
 })
 export class ExploreCategoriesComponent {
-  constructor(private service: ProductService, private route: ActivatedRoute) {}
+  constructor(private service: ProductService, private route: ActivatedRoute, private router:Router) {}
   totalCategories = this.service.categories;
   exploreCategories = this.service.exploreCategories;
   
@@ -27,6 +27,12 @@ export class ExploreCategoriesComponent {
       this.urlCategory = params['i'];
     });
     console.log(this.countByCategory)
+  }
+  allProductsbasedOnCategory(category:any){
+    this.service.searchTerm='';
+    this.route.params.subscribe(params => {
+      this.router.navigate(['/categories', category]);
+    });
   }
 
   ngAfterViewInit() {

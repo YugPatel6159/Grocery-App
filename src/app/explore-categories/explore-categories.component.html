@@ -12,7 +12,7 @@
   <div class="container swiper-container" style="overflow: hidden;">
     <div class="swiper-wrapper">
         <div class="swiper-slide cat-card" *ngFor="let j of exploreCategories">
-            <a [routerLink]="['/categories',j.category]">
+            <a (click)="allProductsbasedOnCategory(j.category)">
                 <img [src]="j.img">
                 <h5>{{j.category}}</h5>
                 <span>{{countByCategory[j.category]}} Items</span>

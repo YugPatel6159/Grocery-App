@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/shared/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/shared/cart.service';
 import { partition } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-category',
@@ -15,11 +16,12 @@ export class CategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private proService: ProductService,
-    private cartService:CartService
+    private cartService: CartService,
+    private location: Location
   ) {}
-  products:Grocery[] = this.proService.groceryList;
+  products: Grocery[] = this.proService.groceryList;
   urlCategory: string = '';
-  uniqueItems:string[]=[];
+  uniqueItems: string[] = [];
   filteredProducts = this.proService.filteredProducts;
   filteredProductsBasedOnCategory =
     this.proService.filteredProductsBasedOnCategory;
@@ -33,11 +35,12 @@ export class CategoryComponent implements OnInit {
       );
       this.uniqueItems = this.storesFilterData();
     });
+
     window.scrollTo(0, 0);
   }
 
   //  this function is for unique stores from filtered stores
-  
+
   storesFilterData() {
     const stores: string[] = [];
     const products = this.getProducts();
@@ -54,14 +57,14 @@ export class CategoryComponent implements OnInit {
 
   // this function is for checkbox
 
-  storeArray(event:any) {
+  storeArray(event: any) {
     const brandValue = event.target.value;
 
     // if users check the checkbox
 
     if (event.target.checked) {
       this.selectedStore.push(brandValue);
-      console.log("selected store from filter",this.selectedStore)
+      console.log('selected store from filter', this.selectedStore);
     }
 
     // if user uncheck
@@ -91,7 +94,18 @@ export class CategoryComponent implements OnInit {
 
   getProducts() {
     let products = this.products;
-
+    const currentUrl = this.location.path();
+    if (currentUrl === 'categories/All') {
+      this.proService.allProducts.subscribe((res) => {
+        products = res;
+      });
+      this.proService.searchTerm = '';
+      // products = this.proService.groceryList;
+      products = products.filter(
+        (p) => p.category == this.proService.selectedCategory
+      );
+      return products;
+    }
     if (
       this.proService.selectedCategory &&
       this.proService.selectedCategory != ''
@@ -99,6 +113,7 @@ export class CategoryComponent implements OnInit {
       products = products.filter(
         (p) => p.category == this.proService.selectedCategory
       );
+      return products;
     }
     if (this.proService.searchTerm && this.proService.searchTerm != '') {
       products = products.filter((p) =>
@@ -106,46 +121,51 @@ export class CategoryComponent implements OnInit {
           .toLowerCase()
           .includes(this.proService.searchTerm.toLowerCase())
       );
+      return products;
+    } else {
+      return products;
     }
-    return products;
   }
 
   // this is for displaying filter box
 
-  filterToggle:boolean = false;
+  filterToggle: boolean = false;
   display() {
     this.filterToggle = !this.filterToggle;
   }
 
   // add products to cart
-  cartArray:any;
-
+  cartArray: any;
 
   // add product to cart in product.json
-
+  finalSubTotal: number = 0;
   addProductToCart(product: Grocery) {
-    
     // this.cartService.addProductToCart(product).subscribe(res=>{
     //   console.log(res);
     //   // this.cartArray.push(res);
     // })
     // let cartProduct = this.proService.matchProduct(product.id);
-    this.cartArray=this.cartService.getProducts(product);
-    console.log(this.cartArray)
+    this.cartArray = this.cartService.getProducts(product);
+    console.log(this.cartArray);
     // this.cartService.myBehaviorSubject.next(this.cartArray);
     this.cartService.cartItem.next(this.cartArray);
+    this.finalSubTotal = this.cartArray
+    .map((product: any) => product.subtotal)
+    .reduce((acc: number, curr: number) => {
+      return acc + curr;
+    },0);
+    this.cartService.updateSubTotal(this.finalSubTotal);
     
-    
-    localStorage.setItem('cart',JSON.stringify(this.cartArray));
-    let cart = localStorage.getItem('cart')
 
-  if(cart){
-   console.log('ls',JSON.parse(cart));
-    this.cartService.cart.next(JSON.parse(cart));
+    //   localStorage.setItem('cart',JSON.stringify(this.cartArray));
+    //   let cart = localStorage.getItem('cart')
+
+    // if(cart){
+    //  console.log('ls',JSON.parse(cart));
+    //   this.cartService.cart.next(JSON.parse(cart));
+    // }
+    // else{
+    //   console.log('else partition')
+    // }
   }
-  else{
-    console.log('else partition')
-  }
-  }
-  
 }

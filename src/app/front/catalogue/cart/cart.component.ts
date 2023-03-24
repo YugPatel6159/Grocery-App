@@ -3,7 +3,7 @@ import { CartService } from 'src/app/shared/cart.service';
 import { Grocery } from 'src/app/shared/interface';
 import { ProductService } from 'src/app/shared/product.service';
 import { CartItem } from 'src/app/shared/cartItemInterface';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -14,13 +14,15 @@ export class CartComponent implements OnInit {
   constructor(
     private service: ProductService,
     private cartService: CartService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router:Router
   ) {}
   cartArray: any;
   cartArr: CartItem[] = [];
   finalSubTotal: number = 0;
   GST:number = 0;
   total:number = 0;
+  
   ngOnInit() {
     //  this.cartService.myBehaviorSubject.subscribe((res)=>{
     //     this.cartArray=res;
@@ -34,11 +36,8 @@ export class CartComponent implements OnInit {
     });
     console.log(this.cartArray);
     this.cartCheckoutPrice();
-    this.cartService.subTotal.next(this.total);
-    
-    
+    // this.cartService.subTotal.next(this.total);
   }
-
 
   // for checkout price 
   cartCheckoutPrice(){
@@ -47,6 +46,8 @@ export class CartComponent implements OnInit {
       return acc + curr;} ,0);
     this.GST = this.finalSubTotal*(10/100);
     this.total = this.finalSubTotal+this.GST;
+    this.cartService.updateTotalPrice(this.total);
+    // this.cartService.updateSubTotal(this.finalSubTotal);
   }
 
   // increase count
@@ -58,7 +59,7 @@ export class CartComponent implements OnInit {
       product.quantityCount += 1;
       product.subtotal = product.quantityCount * product.price;
     }
-    this.cartCheckoutPrice()
+    this.cartCheckoutPrice();
   }
 
   // decrrease count
@@ -83,7 +84,7 @@ export class CartComponent implements OnInit {
 
   }
 
-  onCheckout(){
-    this.route
+  routeToCheckout(){
+    this.router.navigate(['/cart/checkout']);
   }
 }

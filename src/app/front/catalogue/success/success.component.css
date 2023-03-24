@@ -5,13 +5,11 @@
     padding: 80px;
     margin-top: 20px;
 }  
-.column{
+.container{
+    display: flex;
     flex-direction: column;
 }
-.btn{
-    border-radius: 19px;
-}
-.color{
-    color: #7C7C7C;
-
+span{
+    display: flex;
+    justify-content: center;
 }

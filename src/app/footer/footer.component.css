@@ -3,6 +3,10 @@
     justify-content: center;
     margin-top: 100px;
 }
+.company{
+    display: flex;
+    justify-content:space-evenly;
+}
 li{
     list-style: none;
     list-style-type: none;

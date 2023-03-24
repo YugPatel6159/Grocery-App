@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { Subject } from 'rxjs';
 import { Grocery } from './interface';
 
 @Injectable({
@@ -419,6 +420,7 @@ selectedCategory:string='';
     })
     return products;
    }
+   allProducts = new Subject<any>();
   }
 
 

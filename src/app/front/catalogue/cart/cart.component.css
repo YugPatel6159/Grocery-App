@@ -5,43 +5,47 @@
     padding: 80px;
     margin-top: 20px;
 }   
-.number{
-    width:40px;
-    border-radius: 10px;
-    text-align: center;
-}
-.quantity{
-    margin-left: 10px;
-}
-.color{
-    color: rgb(170, 163, 163);
-}   
-.product-name{
-    justify-content: space-between;
-}
-.name{
-    justify-content: center;
-}
-/* .container{
-    margin-left: 150px;
-    justify-content:flex-start;
-} */
+    .number{
+        width:40px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .quantity{
+        margin-left: 10px;
+    }
+    .color{
+        color: rgb(170, 163, 163);
+    }   
+    .product-name{
+        justify-content: space-between;
+    }
+    .name{
+        justify-content: center;
+    }
+    /* .container{
+        margin-left: 150px;
+        justify-content:flex-start;
+    } */
+    .backColor{
+        background-color: rgb(170, 163, 163);
 
-.img{
-    width: 150px;
-    height: 100px;
-}
+    }
 
-/* .width{
-    width:180px;
-    height:100px;
-} */
-.checkout{
-    margin-left: 100px;
-}
-.btn{
-    border-radius: 40px;
-    height: 50px;
-    width: 387px;
-    margin-right: 75px;
-}
+    .img{
+        width: 150px;
+        height: 100px;
+    }
+
+    /* .width{
+        width:180px;
+        height:100px;
+    } */
+    .checkout{
+        margin-left: 100px;
+    }
+    .btn{
+        border-radius: 40px;
+        height: 50px;
+        width: 387px;
+        margin-right: 75px;
+    }
