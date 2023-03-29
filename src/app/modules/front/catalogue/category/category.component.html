@@ -1,0 +1,39 @@
+<div class="category-header">
+  <h2>{{urlCategory}}</h2>
+</div>
+<div class="filter">
+  <div class="icon">
+    <i class="fa-solid fa-filter filter"  (click)="display()"></i>
+  </div>
+  <div class="options" [style.display]="filterToggle? 'block':'none'" >
+    <p style="text-align: center;">Filter Option</p>
+    <div class="option">
+      <ul>
+        <p style="font-size: 16px;">Brand</p>
+        <li *ngFor="let i of uniqueItems" >
+          <input type="checkbox" (change)="storeArray($event)" #brand name="Brand" id="amul" value="{{i}}">{{i}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container" >
+      <div class="card" *ngFor="let i of getProducts()">
+          <a [routerLink]="['product-details',i.grocery_name,i.id]"><img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" /></a>
+          <div class="card-body">
+            <small class="card-title">{{i.category}}</small>
+            <h5 class="grocery-name">{{i.grocery_name}}</h5>
+            <span>☆☆☆☆☆(4)</span>
+            <span class="d-flex small">by&nbsp;<span class="small green">{{i.store}}</span></span>
+            <div class="content">
+              <span class="green">{{i?.discountPrice | currency}} &nbsp;<span class="original-price"
+                [style.text-decoration]="i.discountPrice ? 'line-through' : 'none'">
+                {{i.price | currency}}
+              </span></span>
+              <a class="btn" (click)="addProductToCart(i)"><i class="fas fa-cart-arrow-down"></i>Add</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
