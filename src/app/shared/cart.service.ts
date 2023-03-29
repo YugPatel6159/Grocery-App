@@ -39,7 +39,10 @@ export class CartService {
     let cartItem: CartItem = {
       id: Number(product.id),
       grocery_name: product.grocery_name,
-      price: product.discountPrice ? product.discountPrice : product.price,
+      price:  product.price,
+      discPrice:product.discountPrice,
+      shop: product.store,
+      category:product.category,
       quantity: product.quantity,
       subtotal: Number(
         product.discountPrice ? product.discountPrice : product.price

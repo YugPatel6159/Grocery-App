@@ -1,8 +1,8 @@
 <div class="category-header mt-5">
-    <h2>My Cart</h2>
+  <h2>My Cart</h2>
 </div>
 <!-- {{cartArray[0].price}} -->
-<div class="container">
+<!-- <div class="container">
     <div class="row "  >
         <div class="col-md-6 mt-5" *ngFor="let product of cartArray" >
             <div class="col-md-5">
@@ -56,7 +56,7 @@
     <button class="btn btn-success" (click)="routeToCheckout()">Checkout</button>
 </div>
 </div>
-</div>
+</div> -->
 <!-- <table class="table container w-75 table-hover mt-5">
     <thead class="table-dark">
       <tr>
@@ -91,11 +91,85 @@
     </tbody>
   </table> -->
 
-  <!-- <table>
+<table class="container w-75">
+  <div class="row">
+    <div class="col-md-5">ITEM DESCRIPTION</div>
+    <div class="col-md-3">UNIT PRICE</div>
+    <div class="col-md-2">QUANTITY</div>
+    <div class="col-md-2">SUBTOTAL</div>
+  </div>
+  <div *ngFor="let category of categoryToShow">
     <div class="row">
-        <div class="col-md-6">ITEM DESCRIPTION</div>
-        <div class="col-md-2">UNIT PRICE</div>
-        <div class="col-md-2">QUANTITY</div>
+      <div class="col-md-12 d-flex background">
+        <span>{{ category }}</span>
+        <span>{{ productByCategory[category].length }} items</span>
+        <span>{{ productByCategory[category].totalPrice |currency }} </span>
+      </div>
+      <div class="d-flex" *ngFor="let product of productByCategory[category]">
+        <div class="col-md-5 products">
+          <small>{{ product.shop }}</small>
+          <span class="mt-0"> {{ product.grocery_name }}</span>
+        </div>
+        <div class="col-md-3 products">
+          <span class="green"
+            >{{ product.discPrice | currency }} &nbsp;<span
+              class="original-price"
+              [style.text-decoration]="
+                product.discPrice ? 'line-through' : 'none'
+              "
+            >
+              {{ product.price | currency }}
+            </span></span
+          >
+        </div>
+        <div class="col-md-2">
+          <span
+            ><i class="fa-solid fa-minus" (click)="minus(product)"></i
+          ></span>
+          <span class="quantity"
+            ><input
+              type="text"
+              id="number"
+              class="number"
+              name="number"
+              value="{{ product.quantityCount }}"
+              disabled
+          /></span>
+          <span class="quantity"
+            ><i class="fa-solid fa-plus" (click)="plus(product)"></i
+          ></span>
+        </div>
+        <div class="col-md-2 d-flex justify-content-between">
+          <span>{{ product.subtotal | currency }}</span>
+          <span
+            ><i
+              class="fa-solid fa-xmark fa-xl"
+              (click)="removeProduct(product)"
+            ></i
+          ></span>
+        </div>
+      </div>
     </div>
-  </table> -->
-  
+  </div>
+</table>
+<div class="container box">
+  <div class="d-flex justify-content-end size">
+    <div class="d-flex checkout">
+      <span>Sub Total:</span>
+      <span>Delivery Charges:</span>
+      <hr />
+      <span>TOTAL</span>
+    </div>
+    <div class="checkout">
+      <span>{{ finalSubTotal | currency }}</span>
+      <span>**</span>
+      <hr />
+      <span>{{ finalSubTotal | currency }}</span>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-success" (click)="routeToCheckout()">
+      Checkout
+    </button>
+  </div>
+</div>
