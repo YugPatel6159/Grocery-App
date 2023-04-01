@@ -15,9 +15,9 @@
         
         <button class="btn searchBtn" (click)="onSubmit()"><i class="fa fa-search"></i></button>
       </div>
-      <div class="cartPart d-flex ">
+      <div class="cartPart d-flex">
       <div>
-        <a routerLink="/cart" class="cart">
+        <a routerLink="/cart"  class="cart">
           <i class="fa fa-shopping-cart cart" style="width: 24px;height: 24px;"></i>
           <span class="cartNumber">{{cartLength}}</span>
         </a>
@@ -38,7 +38,7 @@
             Pritey Mehta
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/profile">Edit Profile</a></li>
+            <li><a class="dropdown-item" routerLink="profile">Edit Profile</a></li>
             <li><a class="dropdown-item" routerLink="profile/change-password">change Password</a></li>
           </ul>
         </div>

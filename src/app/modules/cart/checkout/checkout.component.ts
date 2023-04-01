@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/shared/services/Api service/api.service';
 import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 
 @Component({
@@ -9,21 +10,20 @@ import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 })
 export class CheckoutComponent {
 total:number=0;
-  constructor(private cartService:CartService, private router:Router, private route:ActivatedRoute){
-    this.cartService.totalPrice$.subscribe((price) => {
-      this.total = price;
-  });
+  constructor(private cartService:CartService, private router:Router, private route:ActivatedRoute, private apiService:ApiService){
+    
   }
   addresses= this.cartService.address;
     ngOnInit(){
-  
+      // debugger
+  this.apiService.getCartTotal().subscribe((res:any)=>{this.total = res['subTotal']['subtotal'];})
     }
 placeOrder(){
   this.router.navigate(['cart/checkout/success']);
 }
 cancelOrder(){
   if(confirm('Are you sure you want to cancel the order?')){
-    this.cartService.cartItem.next([]);
+    // this.cartService.cartItem.next([]);
     this.cartService.subTotal.next(0);
   this.router.navigate(['']);
 

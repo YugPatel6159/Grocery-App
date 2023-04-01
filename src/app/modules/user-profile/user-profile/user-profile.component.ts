@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,8 +8,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
   options: any;
-  constructor(private router:ActivatedRoute){
+  constructor(private router:Router){
   }
   ngOnInit(){
+    
+  }
+  onLogout(){
+      localStorage.removeItem('token');
+      this.router.navigate([''])
   }
 }

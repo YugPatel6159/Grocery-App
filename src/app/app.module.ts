@@ -15,8 +15,9 @@ import { ExploreCategoriesComponent } from './shared/components/explore-categori
 import { FeaturedProductsComponent } from './shared/components/featured-products/featured-products.component';
 import { TrendingItemsComponent } from './shared/components/trending-items/trending-items.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserProfileModule } from './modules/user-profile/user-profile.module';
+import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
 
 
 
@@ -45,7 +46,7 @@ import { UserProfileModule } from './modules/user-profile/user-profile.module';
     UserProfileModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,6 +25,8 @@ export class ProductDetailsComponent implements OnInit {
       this.urlGroceryName = res['grocery_name'];
       this.urlCategory = res['category'];
       this.productId = Number(res['id']);  
+      console.log(this.urlGroceryName,this.urlCategory, this.productId);
+      
     })
     this.matchedProduct = this.service.matchProduct(this.productId);   
     this.price =this.matchedProduct.price;

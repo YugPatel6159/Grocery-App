@@ -186,8 +186,8 @@
     </thead>
     <tbody *ngFor="let category of categoryToShow">
   
-    <tr class="table-secondary">
-      <td  colspan="5">
+    <tr class="table-secondary" >
+      <td  colspan="5" >
         <div class="col-md-12 d-flex background" [ngClass]="productByCategory[category].length!==0 ? 'd-block' : 'd-none'" >
         <span>{{ category }}</span>
         <span>{{ productByCategory[category].length }} items</span>
@@ -195,8 +195,7 @@
       </div>
     </td>
     </tr>
-      <tr  *ngFor="let product of productByCategory[category]">
-  
+      <tr *ngFor="let product of productByCategory[category]">
         <td >
           <div class="row m-0 p-0">
             {{ product.shop }}

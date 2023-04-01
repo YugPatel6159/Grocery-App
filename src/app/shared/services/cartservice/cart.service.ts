@@ -4,15 +4,18 @@ import { Grocery } from '../../models/interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CartItem } from '../../models/cartItemInterface';
+import { ApiService } from '../Api service/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiService:ApiService) {}
   productUrl = environment.baseUrl;
   myBehaviorSubject = new BehaviorSubject<Grocery[]>([]);
-  cartItem = new BehaviorSubject<CartItem[]>([]);
+  cartItem = new BehaviorSubject<any>([]);
+  cartItem$ = this.cartItem.asObservable();
+
   subTotal = new BehaviorSubject<number>(0);
   cart = new Subject<any>();
   // total = new Subject<number>();
@@ -23,17 +26,19 @@ export class CartService {
   // getProductToCart(){
   //   return this.http.get(this.productUrl);
   // }
-  totalPriceSource = new BehaviorSubject<number>(0);
+  // totalPriceSource = new BehaviorSubject<number>(0);
+  // totalPriceSource$ = this.totalPriceSource.asObservable();
   subTotal$ = this.subTotal.asObservable();
-  updateTotalPrice(price: number) {
-    this.totalPriceSource.next(price);
+  
+  // totalPrice$ = this.totalPriceSource.asObservable();
+  updateTotalItems(cartArray:any){
+    // this.cartItem.next(cartArray.length)
   }
-  totalPrice$ = this.totalPriceSource.asObservable();
   updateSubTotal(subTotal: number) {
     this.subTotal.next(subTotal);
   }
 
-  cartArray: CartItem[] = [];
+  cartArray!:CartItem;
   existingProduct: any;
   getProducts(product: any) {
     let cartItem: CartItem = {
@@ -50,20 +55,24 @@ export class CartService {
       imageUrl: String(product.imageUrl),
       quantityCount: 1,
     };
-    const existingItem = this.cartArray.find((res) => {
-      return res.id === cartItem.id;
-    });
+    // const existingItem = this.cartArray.find((res) => {
+    //   return res.id === cartItem.id;
+    // });
 
-    this.existingProduct = existingItem;
-    console.log(existingItem);
-    if (!existingItem) {
-      this.cartArray.push(cartItem);
-    } else {
-      existingItem.quantityCount += cartItem.quantityCount;
-      existingItem.subtotal = existingItem.quantityCount * existingItem.price;
-    }
-    return this.cartArray;
+    // this.existingProduct = existingItem;
+    // console.log(existingItem);
+    // if (!existingItem) {
+    //   this.cartArray.push(cartItem);
+    // } else {
+    //   existingItem.quantityCount += cartItem.quantityCount;
+    //   existingItem.subtotal = existingItem.quantityCount * existingItem.price;
+    // }
+   this.apiService.addCartApi(cartItem);
+  //  this.apiService.getCartData().subscribe(res=>{this.cartArray = res})
+   return this.apiService.getCartData();
+
   }
+  
   address = [
     {type:'Office',name:'Pritee Mehta', address:'Odell J. Gabbert 1045 Kildeer DriveNorfolk, VA 23502',},
     {type:'Home',name:'Pritee Mehta', address:'Thelma E. Rogers 3651 Burton AvenueMemphis, TN 38104'},

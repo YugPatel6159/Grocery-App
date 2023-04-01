@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 import { partition } from 'rxjs';
 import { Location } from '@angular/common';
+import { ApiService } from 'src/app/shared/services/Api service/api.service';
 
 @Component({
   selector: 'app-category',
@@ -13,12 +14,16 @@ import { Location } from '@angular/common';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
+  cartLength: any;
   constructor(
     private route: ActivatedRoute,
     private proService: ProductService,
     private cartService: CartService,
-    private location: Location
-  ) { }
+    private location: Location,
+    private apiService: ApiService
+  ) { 
+    
+  }
   products: Grocery[] = this.proService.groceryList;
   urlCategory: string = '';
   uniqueItems: string[] = [];
@@ -35,6 +40,7 @@ export class CategoryComponent implements OnInit {
       );
       this.uniqueItems = this.storesFilterData();
     });
+  
 
     window.scrollTo(0, 0);
   }
@@ -94,38 +100,18 @@ export class CategoryComponent implements OnInit {
 
   getProducts() {
     let products = this.products;
-    // const currentUrl = this.location.path();
-    // if (currentUrl === 'categories/All') {
-    //   this.proService.allProducts.subscribe((res) => {
-    //     products = res;
-    //   });
-    //   this.proService.searchTerm = '';
-    //   // products = this.proService.groceryList;
-    //   products = products.filter(
-    //     (p) => p.category == this.proService.selectedCategory
-    //   );
-    //   return products;
-    // }
-    if (
-      this.proService.selectedCategory &&
-      this.proService.selectedCategory != ''
-    ) {
-      products = products.filter(
-        (p) => p.category == this.proService.selectedCategory
-      );
-      return products;
+    const { selectedCategory, searchTerm } = this.proService;
+    if (selectedCategory) {
+      products = products.filter(({ category }) => category === selectedCategory);
     }
-    if (this.proService.searchTerm && this.proService.searchTerm != '') {
-      products = products.filter((p) =>
-        p.grocery_name
-          .toLowerCase()
-          .includes(this.proService.searchTerm.toLowerCase())
+    if (searchTerm) {
+      products = products.filter(({ grocery_name }) =>
+        grocery_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      return products;
-    } else {
-      return products;
     }
+    return products;
   }
+  
 
   // this is for displaying filter box
 
@@ -139,31 +125,27 @@ export class CategoryComponent implements OnInit {
 
   // add product to cart in product.json
   finalSubTotal: number = 0;
+  totalPrice=0;
+  cartProducts:Grocery[]=[];
   addProductToCart(product: Grocery) {
-    // this.cartService.addProductToCart(product).subscribe(res=>{
-    //   console.log(res);
-    //   // this.cartArray.push(res);
-    // })
-    // let cartProduct = this.proService.matchProduct(product.id);
-    this.cartArray = this.cartService.getProducts(product);
-    console.log(this.cartArray);
-    // this.cartService.myBehaviorSubject.next(this.cartArray);
-    this.cartService.cartItem.next(this.cartArray);
-    this.finalSubTotal = this.cartArray
-      .map((product: any) => product.subtotal)
-      .reduce((acc: number, curr: number) => {
-        return acc + curr;
-      }, 0);
-    this.cartService.updateSubTotal(this.finalSubTotal);
+    
+     this.cartService.getProducts(product).subscribe(cartArray => {
+      this.cartArray = cartArray;
+      this.cartLength = cartArray.length;
+      console.log('cartLength',this.cartLength)
+      this.cartService.cartItem.next(this.cartLength);
+      this.finalSubTotal = this.cartArray
+        .map((product: any) => product.subtotal)
+        .reduce((acc: number, curr: number) => {
+          return acc + curr;
+        }, 0);
+      this.apiService.updateCartTotal(this.finalSubTotal);
 
-    // localStorage.setItem('cart', JSON.stringify(this.cartArray));
-    // let cart = localStorage.getItem('cart');
+        console.log('final subtotal from add to cart',this.finalSubTotal)
+        this.cartService.subTotal.next(this.finalSubTotal);
+    });
 
-    // if (cart) {
-    //   console.log('ls', JSON.parse(cart));
-    //   this.cartService.cart.next(JSON.parse(cart));
-    // } else {
-    //   console.log('else partition');
-    // }
+    
+    
   }
 }

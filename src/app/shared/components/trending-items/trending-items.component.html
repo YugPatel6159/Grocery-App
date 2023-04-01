@@ -22,7 +22,7 @@
         </span>
         <div class="trend-card" *ngFor="let product of topRatedProducts">
             <div>
-               <a [routerLink]="['top-rated',product.grocery_name]"> <img [src]="product.imageUrl" height="101px" width="101px" alt=""></a>
+               <a [routerLink]="['top-rated',product.grocery_name,product.id]"> <img [src]="product.imageUrl" height="101px" width="101px" alt=""></a>
             </div>
             <div>
                 <h6>{{product.grocery_name}}</h6>
