@@ -23,7 +23,7 @@
                   [style.text-decoration]="i.discountPrice ? 'line-through' : 'none'">
                   {{i.price | currency}}
                 </span></span>
-                <a class="btn" (click)="onAdd()"><i class="fas fa-cart-arrow-down"></i>Add</a>
+                <a class="btn" (click)="onAdd(i)"><i class="fas fa-cart-arrow-down"></i>Add</a>
               </div>
         </div>
     </div>

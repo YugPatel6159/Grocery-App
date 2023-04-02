@@ -38,7 +38,7 @@ export class CartService {
     this.subTotal.next(subTotal);
   }
 
-  cartArray!:CartItem;
+  cartArray!:any;
   existingProduct: any;
   getProducts(product: any) {
     let cartItem: CartItem = {
@@ -72,7 +72,27 @@ export class CartService {
    return this.apiService.getCartData();
 
   }
-  
+  cartLength!:number;
+  finalSubTotal!:number;
+  addProductToCart(product: Grocery) {
+    
+    this.getProducts(product).subscribe(cartArray => {
+     this.cartArray = cartArray;
+     this.cartLength = cartArray.length;
+     console.log('cartLength',this.cartLength)
+     this.cartItem.next(this.cartLength);
+     this.finalSubTotal = this.cartArray
+       .map((product: any) => product.subtotal)
+       .reduce((acc: number, curr: number) => {
+         return acc + curr;
+       }, 0);
+     this.apiService.updateCartTotal(this.finalSubTotal);
+
+       console.log('final subtotal from add to cart',this.finalSubTotal)
+       this.subTotal.next(this.finalSubTotal);
+   });
+   
+ }
   address = [
     {type:'Office',name:'Pritee Mehta', address:'Odell J. Gabbert 1045 Kildeer DriveNorfolk, VA 23502',},
     {type:'Home',name:'Pritee Mehta', address:'Thelma E. Rogers 3651 Burton AvenueMemphis, TN 38104'},

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Grocery } from 'src/app/shared/models/interface';
+import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 import { ProductService } from 'src/app/shared/services/productservice/product.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ProductService } from 'src/app/shared/services/productservice/product.s
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-  constructor(private route:ActivatedRoute, private service:ProductService){
+  constructor(private route:ActivatedRoute, private service:ProductService, private cartService:CartService){
   }
   urlGroceryName:any;
   urlCategory:any;
@@ -49,5 +50,8 @@ export class ProductDetailsComponent implements OnInit {
 
 
   }
+  onAdd(product:any){
+    this.cartService.addProductToCart(product);
+    }
   
 }

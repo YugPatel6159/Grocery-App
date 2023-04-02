@@ -19,15 +19,20 @@ total:number=0;
   this.apiService.getCartTotal().subscribe((res:any)=>{this.total = res['subTotal']['subtotal'];})
     }
 placeOrder(){
+  this.apiService.deleteCart().subscribe(()=>
+  {
+    console.log('cart cleared')
+  },
+  (err:any)=>{
+    console.log('err',err)
+  }
+  );
   this.router.navigate(['cart/checkout/success']);
 }
 cancelOrder(){
   if(confirm('Are you sure you want to cancel the order?')){
-    // this.cartService.cartItem.next([]);
     this.cartService.subTotal.next(0);
-  this.router.navigate(['']);
-
+    this.router.navigate(['']);
   }
 }
-
 }

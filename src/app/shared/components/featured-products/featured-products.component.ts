@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import Swiper from 'swiper';
 import { ProductService } from '../../services/productservice/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../../services/cartservice/cart.service';
 
 @Component({
   selector: 'app-featured-products',
@@ -9,13 +10,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./featured-products.component.css']
 })
 export class FeaturedProductsComponent {
-  constructor(private service:ProductService, private route:ActivatedRoute){
+  constructor(private service:ProductService, private route:ActivatedRoute, private cartService:CartService){
   }
   product = this.service.products;
   groceryList = this.service.groceryList;
  urlCategory:string='';
- onAdd(){
-  window.scrollTo(0,0)
+ onAdd(product:any){
+ this.cartService.addProductToCart(product);
  }
   ngOnInit(){
     this.route.params.subscribe(params=>{

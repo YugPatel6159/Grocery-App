@@ -1,8 +1,21 @@
 {
-  "cart": [],
+  "cart": [
+    {
+      "id": 13,
+      "grocery_name": "Beef Ribeye Steak",
+      "price": 12.99,
+      "discPrice": 9.99,
+      "shop": "Meat King",
+      "category": "Meat",
+      "quantity": "1 lb",
+      "subtotal": 9.99,
+      "imageUrl": "../../assets/Rectangle 19.png",
+      "quantityCount": 1
+    }
+  ],
   "subTotal": {
     "subTotal": {
-      "subtotal": 0
+      "subtotal": 9.99
     }
   }
 }

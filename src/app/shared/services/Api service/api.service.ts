@@ -31,7 +31,10 @@ export class ApiService {
     }
     customerDetails:any;
     getUserDetails(){
-      this.http.get(this.baseUrl+environment.userDetails).subscribe(data=>{this.customerDetails = data});
+      this.http.get(this.baseUrl+environment.userDetails).subscribe(data=>
+        {
+          this.customerDetails = data
+        });
       return this.customerDetails;
     }
     changePassword(newPassword:any){
@@ -68,6 +71,10 @@ export class ApiService {
        this.http.put(this.cartTotal,data).subscribe(
         {next:res=>console.log("res from patch",res),
         error: err=>console.log(err)})
+    }
+
+    deleteCart(){
+      return this.http.delete('http://localhost:3000/cart');
     }
 
     

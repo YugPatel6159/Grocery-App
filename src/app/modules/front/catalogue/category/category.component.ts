@@ -128,24 +128,6 @@ export class CategoryComponent implements OnInit {
   totalPrice=0;
   cartProducts:Grocery[]=[];
   addProductToCart(product: Grocery) {
-    
-     this.cartService.getProducts(product).subscribe(cartArray => {
-      this.cartArray = cartArray;
-      this.cartLength = cartArray.length;
-      console.log('cartLength',this.cartLength)
-      this.cartService.cartItem.next(this.cartLength);
-      this.finalSubTotal = this.cartArray
-        .map((product: any) => product.subtotal)
-        .reduce((acc: number, curr: number) => {
-          return acc + curr;
-        }, 0);
-      this.apiService.updateCartTotal(this.finalSubTotal);
-
-        console.log('final subtotal from add to cart',this.finalSubTotal)
-        this.cartService.subTotal.next(this.finalSubTotal);
-    });
-
-    
-    
+    this.cartService.addProductToCart(product);
   }
 }
