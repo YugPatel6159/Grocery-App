@@ -7,6 +7,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { ManageAddressComponent } from './manage-address/manage-address.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditAddressComponent } from './manage-address/edit-address/edit-address.component';
 // import { SidebarComponent } from './Layouts/sidebar/sidebar.component';
 
 
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProfileComponent,
     OrdersComponent,
     ManageAddressComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    EditAddressComponent
   ],
   imports: [
     CommonModule,

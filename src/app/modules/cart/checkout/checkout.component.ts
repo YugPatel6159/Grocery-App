@@ -17,6 +17,7 @@ total:number=0;
     ngOnInit(){
       // debugger
   this.apiService.getCartTotal().subscribe((res:any)=>{this.total = res['subTotal']['subtotal'];})
+  // this.cartService.subTotal$.subscribe(res=>this.total=res)
     }
 placeOrder(){
   this.apiService.deleteCart().subscribe(()=>

@@ -123,7 +123,8 @@ export class CartComponent implements OnInit{
   }
 
   // remove product
-  removeProduct(product: any) {
+
+  removeProduct(product: any){
     const categoryArray = this.productByCategory[product.category];
     this.apiService.deleteCartData(product.id).subscribe(()=>{
       this.apiService.getCartData().subscribe(cartArray =>{
@@ -132,6 +133,7 @@ export class CartComponent implements OnInit{
         console.log("after remove of product",this.cartApiData)
       });
     });
+
     const index = categoryArray.indexOf(product);
     if (index > -1) {
       categoryArray.splice(index, 1);

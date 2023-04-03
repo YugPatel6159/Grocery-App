@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loginData } from 'src/app/shared/models/logindata';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
+import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { ApiService } from 'src/app/shared/services/Api service/api.service';
 })
 export class LoginComponent {
   loginForm: any;
-  constructor(private fb:FormBuilder, private apiService:ApiService, private router:Router){
+  constructor(private fb:FormBuilder, private apiService:ApiService, private router:Router, private cartService: CartService){
    this.loginForm=this.fb.group({
      userName:['', Validators.required],
      password:['', Validators.required]
@@ -38,6 +39,7 @@ export class LoginComponent {
     localStorage.setItem('token',data.data)
     this.router.navigate([''])
       console.log(loginData)
+      this.cartService.header.next(true)
   },
     (err:any)=>{
       console.log(err)

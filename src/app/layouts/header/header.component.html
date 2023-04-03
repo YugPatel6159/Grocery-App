@@ -32,14 +32,19 @@
       <!-- <div class="userPart">
           <a value="name" routerLink="/profile" >Pritee Mehta</a>
       </div> -->
-      <div class="profile">
+      <div class="profile" *ngIf="!tokenValue">
+        <button class="btn btn-success me-3" [routerLink]="['/login']">login</button>
+        <button class="btn btn-success" [routerLink]="['/signUp']">signup</button>
+      </div>
+      <div class="profile" *ngIf="tokenValue">
         <div class="dropdown">
           <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Pritey Mehta
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="profile">Edit Profile</a></li>
+            <li><a class="dropdown-item" routerLink="profile">Profile</a></li>
             <li><a class="dropdown-item" routerLink="profile/change-password">change Password</a></li>
+            <li><a class="dropdown-item" *ngIf="tokenValue" (click)="onLogout()">Logout</a></li>
           </ul>
         </div>
       </div>

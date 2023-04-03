@@ -1,3 +1,6 @@
+<div class="container mt-5 ms-5">
+  <button class="btn btn-success" (click)="addAddress()">Add Address</button>
+</div>
 <div class="d-flex" >
   <div class="container mt-5 ms-5" *ngFor="let i of address">
     <div class="card" style="width: 18rem">
@@ -13,7 +16,7 @@
         <div class="d-flex justify-content-between">
           <button class="btn btn-secondary">Deliver here</button>
           <i class="fa-solid fa-trash fa-lg mt-3"></i>
-          <i class="fa fa-pen-to-square fa-lg mt-3"></i>
+          <i class="fa fa-pen-to-square fa-lg mt-3" (click)="editAddress()"></i>
         </div>
       </div>
     </div>

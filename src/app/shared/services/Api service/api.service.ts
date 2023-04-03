@@ -31,11 +31,7 @@ export class ApiService {
     }
     customerDetails:any;
     getUserDetails(){
-      this.http.get(this.baseUrl+environment.userDetails).subscribe(data=>
-        {
-          this.customerDetails = data
-        });
-      return this.customerDetails;
+      return this.http.get(this.baseUrl+environment.userDetails)
     }
     changePassword(newPassword:any){
       return this.http.put(this.baseUrl+this.changePasswordUrl,newPassword);
@@ -76,8 +72,9 @@ export class ApiService {
     deleteCart(){
       return this.http.delete('http://localhost:3000/cart');
     }
-
-    
+    postAddressData(address:any){
+      return this.http.post(this.baseUrl+'customer/add-customer-address',address);
+    }    
   }
   
 

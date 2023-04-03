@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 
 @Component({
@@ -8,7 +9,13 @@ import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 })
 export class ManageAddressComponent {
   address:any;
-  constructor(private cartService:CartService){
+  constructor(private cartService:CartService, private router:Router){
     this.address = this.cartService.address;
+  }
+  editAddress(){
+
+  }
+  addAddress(){
+    this.router.navigate(['/profile/edit-address'])
   }
 }

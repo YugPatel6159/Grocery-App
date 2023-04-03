@@ -11,29 +11,15 @@ import { ApiService } from '../Api service/api.service';
 })
 export class CartService {
   constructor(private http: HttpClient, private apiService:ApiService) {}
-  productUrl = environment.baseUrl;
-  myBehaviorSubject = new BehaviorSubject<Grocery[]>([]);
   cartItem = new BehaviorSubject<any>([]);
   cartItem$ = this.cartItem.asObservable();
-
   subTotal = new BehaviorSubject<number>(0);
-  cart = new Subject<any>();
-  // total = new Subject<number>();
-
-  // addProductToCart(product:any){
-  //   return this.http.post(this.productUrl,product);
-  // }
-  // getProductToCart(){
-  //   return this.http.get(this.productUrl);
-  // }
-  // totalPriceSource = new BehaviorSubject<number>(0);
-  // totalPriceSource$ = this.totalPriceSource.asObservable();
   subTotal$ = this.subTotal.asObservable();
+
+  header = new BehaviorSubject<boolean>(false);
+  header$ = this.header.asObservable();
+
   
-  // totalPrice$ = this.totalPriceSource.asObservable();
-  updateTotalItems(cartArray:any){
-    // this.cartItem.next(cartArray.length)
-  }
   updateSubTotal(subTotal: number) {
     this.subTotal.next(subTotal);
   }
@@ -55,20 +41,7 @@ export class CartService {
       imageUrl: String(product.imageUrl),
       quantityCount: 1,
     };
-    // const existingItem = this.cartArray.find((res) => {
-    //   return res.id === cartItem.id;
-    // });
-
-    // this.existingProduct = existingItem;
-    // console.log(existingItem);
-    // if (!existingItem) {
-    //   this.cartArray.push(cartItem);
-    // } else {
-    //   existingItem.quantityCount += cartItem.quantityCount;
-    //   existingItem.subtotal = existingItem.quantityCount * existingItem.price;
-    // }
    this.apiService.addCartApi(cartItem);
-  //  this.apiService.getCartData().subscribe(res=>{this.cartArray = res})
    return this.apiService.getCartData();
 
   }
@@ -79,7 +52,6 @@ export class CartService {
     this.getProducts(product).subscribe(cartArray => {
      this.cartArray = cartArray;
      this.cartLength = cartArray.length;
-     console.log('cartLength',this.cartLength)
      this.cartItem.next(this.cartLength);
      this.finalSubTotal = this.cartArray
        .map((product: any) => product.subtotal)
@@ -87,8 +59,6 @@ export class CartService {
          return acc + curr;
        }, 0);
      this.apiService.updateCartTotal(this.finalSubTotal);
-
-       console.log('final subtotal from add to cart',this.finalSubTotal)
        this.subTotal.next(this.finalSubTotal);
    });
    

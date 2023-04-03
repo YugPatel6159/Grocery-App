@@ -6,6 +6,7 @@ import { ManageAddressComponent } from './manage-address/manage-address.componen
 import { OrdersComponent } from './orders/orders.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditAddressComponent } from './manage-address/edit-address/edit-address.component';
 
 const routes: Routes = [
   // {
@@ -29,6 +30,9 @@ const routes: Routes = [
     { path: '', redirectTo: 'profile', pathMatch: 'full' },
     {
       path:'', component:ProfileComponent
+    },
+    {
+      path:'edit-address', component:EditAddressComponent
     },
     {
       path:'manage-Address', component:ManageAddressComponent

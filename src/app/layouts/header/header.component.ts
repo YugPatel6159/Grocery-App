@@ -18,15 +18,21 @@ import { HttpClient } from '@angular/common/http';
 
 
 export class HeaderComponent implements OnInit {
+customerDetails: any;
+tokenValue:boolean=false;
 constructor(private service:ProductService,private cartService:CartService, private router:Router, private Route:ActivatedRoute, private apiService:ApiService, private http:HttpClient){
-  // this.cartService.totalPrice$.subscribe(res=>{
-  //   this.grandTotal = res
-  // })
   this.apiService.getCartData().subscribe(res=>{this.cartLength = res.length});
-  // this.apiService.getCartTotal().subscribe((res:any)=>{this.grandTotal = res['subTotal']['subtotal'];})
   this.token = localStorage.getItem('token');
+  if(this.token){
+    this.tokenValue = true
+  }
+  else{
+    this.tokenValue = false
+  }
+
   this.cartService.cartItem$.subscribe((res)=>{this.cartLength = res})
   this.cartService.subTotal$.subscribe((res)=>{this.grandTotal=res});
+  
 }
 
 // groceryList:Grocery[] = this.service.groceryList
@@ -41,14 +47,15 @@ userDetails:any;
 ngOnInit(){
 this.service.selectedCategory = this.category;
 this.apiService.getCartTotal().subscribe((res:any)=>{this.grandTotal = res['subTotal']['subtotal'];})
+this.cartService.header$.subscribe(res=>this.tokenValue = res)
+this.token = localStorage.getItem('token');
+if(this.token){
+  this.tokenValue = true
+}
+else{
+  this.tokenValue = false
+}
 
-// this.cartService.cartItem.subscribe((res)=>{
-//   this.cartLength = res.length;
-// })
-
-// this.apiService.getCartData().subscribe(res=>{this.cartLength = res.length});
-
-// this.cartService.cartItem$.subscribe(res=>this.cartLength=res.length)
 this.getCustomerDetails();
  
 }
@@ -69,9 +76,29 @@ onSubmit() {
 }
 
 getCustomerDetails(){
-  this.userDetails = this.apiService.getUserDetails();
-  console.log("user Data",this.userDetails);
+ this.apiService.getUserDetails().subscribe((data:any)=>
+    {
+      this.customerDetails = data
+      console.log("user Data",this.customerDetails);
+    },
+    err=>{
+      console.log(err);
+    }
+    );;
 }
+onLogout(){
+  localStorage.removeItem('token');
+  this.router.navigate(['']);
+  this.token = localStorage.getItem('token');
+if(this.token){
+  this.tokenValue = true
+}
+else{
+  this.tokenValue = false
+}
+
+}
+
 
 
 }
