@@ -33,10 +33,10 @@ export class LoginComponent {
     password: this.password.value
   }
     this.apiService.loginUser(loginData).subscribe((data:any)=>{
-      // alert('login Successfull')
+      alert('login Successfull')
       console.log(data.data);
 
-    localStorage.setItem('token',data.data)
+    localStorage.setItem('token',data.data.token)
     this.router.navigate([''])
       console.log(loginData)
       this.cartService.header.next(true)

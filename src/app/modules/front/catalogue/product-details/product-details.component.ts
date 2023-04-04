@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Grocery } from 'src/app/shared/models/interface';
 import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 import { ProductService } from 'src/app/shared/services/productservice/product.service';
@@ -10,7 +11,7 @@ import { ProductService } from 'src/app/shared/services/productservice/product.s
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-  constructor(private route:ActivatedRoute, private service:ProductService, private cartService:CartService){
+  constructor(private route:ActivatedRoute, private service:ProductService, private cartService:CartService,private toastr: ToastrService){
   }
   urlGroceryName:any;
   urlCategory:any;
@@ -47,11 +48,10 @@ export class ProductDetailsComponent implements OnInit {
       this.price = this.price + this.matchedProduct.price;
       this.discPrice = this.discPrice + this.matchedProduct.discountedPrice;
     }
-
-
   }
+  
   onAdd(product:any){
     this.cartService.addProductToCart(product);
+    this.toastr.success('product added to cart','Success')
     }
-  
 }

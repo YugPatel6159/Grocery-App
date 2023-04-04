@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { addAddress } from 'src/app/shared/models/addAddress';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
+import {  ToastrService } from 'ngx-toastr';
+
 
 @Component({
-  selector: 'app-edit-address',
-  templateUrl: './edit-address.component.html',
-  styleUrls: ['./edit-address.component.css']
+  selector: 'app-add-address',
+  templateUrl: './add-address.component.html',
+  styleUrls: ['./add-address.component.css']
 })
-export class EditAddressComponent {
-  states = [  
+export class AddAddressComponent {
+   states = [  
     {     name: 'Andaman and Nicobar Islands',     cities: ['Port Blair'] 
   },
   { 
@@ -143,11 +147,12 @@ export class EditAddressComponent {
       'Kargil', 'Leh'
       ]
       }]
-      editAddress!:FormGroup;
+      addAddress!:FormGroup;
       stateArr:[]=[]
   addressData!:addAddress;
-  constructor(private fb:FormBuilder, private apiService:ApiService){
-   this.editAddress=this.fb.group({
+  constructor(private fb:FormBuilder, private apiService:ApiService,
+    private router:Router,private toastr: ToastrService){
+   this.addAddress=this.fb.group({
      address1:['',Validators.required],
      address2:['',Validators.required],
      area:['', [Validators.required]],
@@ -161,20 +166,6 @@ export class EditAddressComponent {
    )
   }
   ngOnInit(){
-    this.apiService.getAddressFromApi().subscribe(res=>{
-      console.log('response',res)
-      this.editAddress.patchValue({
-        address1: 'res.address_line_1',
-        address2: "address.address2",
-        area: "address.area",
-        city: "address.city",
-        state:"address.state",
-        country: "address.country",
-        postalCode: "address.postal_code",
-        landMark:"address.landmark",
-        tag: "address.tag"
-      })
-    })
   }
   cities:any;
   selectedState(state:any){
@@ -186,31 +177,31 @@ export class EditAddressComponent {
   }
   selectedStates:any
  get address1(){
-   return this.editAddress.get('address1')
+   return this.addAddress.get('address1')
  }
  get address2(){
-   return this.editAddress.get('address2')
+   return this.addAddress.get('address2')
  }
  get area(){
-   return this.editAddress.get('area')
+   return this.addAddress.get('area')
  }
  get city(){
-   return this.editAddress.get('city')
+   return this.addAddress.get('city')
  }
  get state(){
-   return this.editAddress.get('state')
+   return this.addAddress.get('state')
  }
  get country(){
-   return this.editAddress.get('country')
+   return this.addAddress.get('country')
  }
  get postalCode(){
-   return this.editAddress.get('postalCode')
+   return this.addAddress.get('postalCode')
  }
  get landMark(){
-  return this.editAddress.get('landMark')
+  return this.addAddress.get('landMark')
 }
 get tag(){
-  return this.editAddress.get('tag')
+  return this.addAddress.get('tag')
 }
 
 onSave(){
@@ -227,6 +218,17 @@ onSave(){
   }
 
   this.apiService.postAddressData(this.addressData).subscribe(
+    (res:any)=>{
+      console.log(res)
+      this.toastr.success(res.message, 'Success');
+      this.router.navigate(['/profile/manage-Address'])
+  },
+  (err:any)=>{
+    console.log(err);
+    this.toastr.error(err.error.message, 'Error');
+
+  })
+  this.apiService.addAddressToApi(this.addressData).subscribe(
     (res:any)=>{
       console.log(res)
   },

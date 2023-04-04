@@ -3,6 +3,7 @@ import Swiper from 'swiper';
 import { ProductService } from '../../services/productservice/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cartservice/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-featured-products',
@@ -10,13 +11,15 @@ import { CartService } from '../../services/cartservice/cart.service';
   styleUrls: ['./featured-products.component.css']
 })
 export class FeaturedProductsComponent {
-  constructor(private service:ProductService, private route:ActivatedRoute, private cartService:CartService){
+  constructor(private service:ProductService, private route:ActivatedRoute, private cartService:CartService,
+    private toastr: ToastrService){
   }
   product = this.service.products;
   groceryList = this.service.groceryList;
  urlCategory:string='';
  onAdd(product:any){
  this.cartService.addProductToCart(product);
+
  }
   ngOnInit(){
     this.route.params.subscribe(params=>{

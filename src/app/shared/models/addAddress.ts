@@ -1,5 +1,4 @@
 export interface addAddress{
-    
         address_line_1: string;
         address_line_2: string;
         area: string;
@@ -9,5 +8,4 @@ export interface addAddress{
         postal_code: string;
         landmark: string;
         tag: string;
-    
 }

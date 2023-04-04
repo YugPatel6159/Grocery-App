@@ -5,6 +5,7 @@ import { changePassword } from 'src/app/shared/models/changePassword';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
 import { AuthService } from 'src/app/shared/services/auth service/auth.service';
 import {  passwordValidator } from '../validators/validator';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,7 +16,7 @@ import {  passwordValidator } from '../validators/validator';
 export class ChangePasswordComponent implements OnInit {
   options: any;
   changePasswordForm:FormGroup;
-  constructor(private router:ActivatedRoute, private fb:FormBuilder, private apiService:ApiService, private authService:AuthService){
+  constructor(private router:ActivatedRoute, private fb:FormBuilder, private apiService:ApiService, private authService:AuthService,private toastr: ToastrService){
     this.changePasswordForm = this.fb.group({
       currPassword:['', Validators.required],
       newPassword:['',[Validators.required, Validators.minLength(8)]],
@@ -49,7 +50,11 @@ export class ChangePasswordComponent implements OnInit {
       newPassword:this.newPassword?.value
     }
     if(token!=null){
-      this.apiService.changePassword(this.newchangePassword).subscribe(data=>{console.log(data)}, err=>{console.log(err)});
+      this.apiService.changePassword(this.newchangePassword).subscribe(
+        data=>{console.log(data)
+        this.toastr.success("password changed successfully",'Success')}, 
+        err=>{console.log(err)}
+        );
     }
   }
   

@@ -5,12 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CartItem } from '../../models/cartItemInterface';
 import { ApiService } from '../Api service/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private http: HttpClient, private apiService:ApiService) {}
+  constructor(private http: HttpClient, private apiService:ApiService,private toastr: ToastrService) {}
   cartItem = new BehaviorSubject<any>([]);
   cartItem$ = this.cartItem.asObservable();
   subTotal = new BehaviorSubject<number>(0);
@@ -43,15 +44,14 @@ export class CartService {
     };
    this.apiService.addCartApi(cartItem);
    return this.apiService.getCartData();
-
   }
   cartLength!:number;
   finalSubTotal!:number;
   addProductToCart(product: Grocery) {
     
-    this.getProducts(product).subscribe(cartArray => {
-     this.cartArray = cartArray;
-     this.cartLength = cartArray.length;
+    this.getProducts(product).subscribe((res) => {
+     this.cartArray = res;
+     this.cartLength = res.length;
      this.cartItem.next(this.cartLength);
      this.finalSubTotal = this.cartArray
        .map((product: any) => product.subtotal)
@@ -60,6 +60,10 @@ export class CartService {
        }, 0);
      this.apiService.updateCartTotal(this.finalSubTotal);
        this.subTotal.next(this.finalSubTotal);
+       this.toastr.success('product added to cart','Success')
+   },
+   (err)=>{
+    this.toastr.error(err.error.message,'error')
    });
    
  }

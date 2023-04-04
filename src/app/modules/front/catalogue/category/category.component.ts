@@ -7,6 +7,7 @@ import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 import { partition } from 'rxjs';
 import { Location } from '@angular/common';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -20,7 +21,8 @@ export class CategoryComponent implements OnInit {
     private proService: ProductService,
     private cartService: CartService,
     private location: Location,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toastr: ToastrService
   ) { 
     
   }
@@ -40,6 +42,9 @@ export class CategoryComponent implements OnInit {
       );
       this.uniqueItems = this.storesFilterData();
     });
+    this.apiService.getAllCategories().subscribe((res:any)=>{
+      console.log(res);
+    })
   
 
     window.scrollTo(0, 0);
@@ -129,5 +134,6 @@ export class CategoryComponent implements OnInit {
   cartProducts:Grocery[]=[];
   addProductToCart(product: Grocery) {
     this.cartService.addProductToCart(product);
+
   }
 }

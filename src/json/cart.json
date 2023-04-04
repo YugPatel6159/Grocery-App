@@ -4,5 +4,19 @@
     "subTotal": {
       "subtotal": 0
     }
-  }
+  },
+  "Address": [
+    {
+      "address_line_1": "683/A, VIJAYRAJNAGAR, Bhavnagar, Gujarat 364002, India",
+      "address_line_2": "683/A RIDDHI SIDDHI",
+      "area": "234",
+      "city": "Bhavnagar",
+      "state": "Gujarat",
+      "country": "India",
+      "postal_code": "364002",
+      "landmark": "rto",
+      "tag": "home",
+      "id": 6
+    }
+  ]
 }

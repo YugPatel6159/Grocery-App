@@ -68,6 +68,8 @@ export class CartComponent implements OnInit{
     this.finalSubTotal = subTotal.reduce((acc: number, curr: number) => {
       return acc + curr;
     }, 0);
+    console.log('fial', this.finalSubTotal)
+    this.apiService.updateCartTotal(this.finalSubTotal)
     this.cartService.updateSubTotal(this.finalSubTotal);
   }
 

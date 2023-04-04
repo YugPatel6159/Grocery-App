@@ -74,17 +74,21 @@ onSubmit() {
   this.router.navigate([route]);
   this.searchTerm='';
 }
-
+name!:string
 getCustomerDetails(){
- this.apiService.getUserDetails().subscribe((data:any)=>
+ this.apiService.getUserDetails().subscribe(
+  {
+    next:(data:any)=>
     {
-      this.customerDetails = data
+      this.customerDetails = data.data; 
       console.log("user Data",this.customerDetails);
+      this.name = data.data.username
     },
-    err=>{
+
+      error:(err:any)=>{
       console.log(err);
     }
-    );;
+  });
 }
 onLogout(){
   localStorage.removeItem('token');

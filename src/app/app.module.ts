@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserProfileModule } from './modules/user-profile/user-profile.module';
 import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
+;
 
 
 

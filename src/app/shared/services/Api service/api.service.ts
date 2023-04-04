@@ -7,12 +7,17 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-
+  allCategories = environment.allCategoryUrl;
+  
   constructor( private http:HttpClient) { }
   baseUrl = environment.baseUrl;
   cartUrl = environment.cartUrl;
   changePasswordUrl= environment.changePassword;
   cartTotal = environment.getCartApi;
+  addAddress = environment.addAddress;
+  customerDetails:any;
+  edituserDetails = environment.editUserDetails;
+  addAddressApi=environment.addAddressToApi;
   registerUser(userData:any){
     const registerUrl = environment.registerUrl;
     this.http.post(this.baseUrl+registerUrl,userData).subscribe(res=>console.log(res),err=>console.log(err));
@@ -29,9 +34,8 @@ export class ApiService {
         {next:res=>console.log(res),
         error: err=>console.log(err)})
     }
-    customerDetails:any;
     getUserDetails(){
-      return this.http.get(this.baseUrl+environment.userDetails)
+      return this.http.get(this.baseUrl+environment.userDetails,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})})
     }
     changePassword(newPassword:any){
       return this.http.put(this.baseUrl+this.changePasswordUrl,newPassword);
@@ -69,12 +73,32 @@ export class ApiService {
         error: err=>console.log(err)})
     }
 
-    deleteCart(){
-      return this.http.delete('http://localhost:3000/cart');
+    clearCart(): Observable<any> {
+      return this.http.delete<any>(this.cartUrl);
     }
+
     postAddressData(address:any){
-      return this.http.post(this.baseUrl+'customer/add-customer-address',address);
-    }    
+      return this.http.post(this.baseUrl+this.addAddress,address);
+    } 
+    
+    addAddressToApi(address:any){
+      return this.http.post(this.addAddressApi,address);
+    }
+
+    getAddressFromApi(){
+      return this.http.get(this.addAddressApi);
+    }
+
+    deleteAddress(id:number){
+      return this.http.delete(this.addAddressApi+'/'+id)
+    }
+
+    getAllCategories(){
+      return this.http.get(this.baseUrl+this.allCategories,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})});
+    }
+    editCustomer(userDetails:any){
+      return this.http.put(this.baseUrl+this.edituserDetails,userDetails)
+    }
   }
   
 

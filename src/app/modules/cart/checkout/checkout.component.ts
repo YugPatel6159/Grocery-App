@@ -19,17 +19,14 @@ total:number=0;
   this.apiService.getCartTotal().subscribe((res:any)=>{this.total = res['subTotal']['subtotal'];})
   // this.cartService.subTotal$.subscribe(res=>this.total=res)
     }
+    
 placeOrder(){
-  this.apiService.deleteCart().subscribe(()=>
-  {
-    console.log('cart cleared')
-  },
-  (err:any)=>{
-    console.log('err',err)
-  }
+  this.apiService.clearCart().subscribe(()=>
+  console.log('car is cleared')
   );
   this.router.navigate(['cart/checkout/success']);
 }
+
 cancelOrder(){
   if(confirm('Are you sure you want to cancel the order?')){
     this.cartService.subTotal.next(0);
