@@ -16,9 +16,10 @@ export class CartService {
   cartItem$ = this.cartItem.asObservable();
   subTotal = new BehaviorSubject<number>(0);
   subTotal$ = this.subTotal.asObservable();
-
   header = new BehaviorSubject<boolean>(false);
   header$ = this.header.asObservable();
+  address = new Subject<any>();
+  address$ = this.address.asObservable();
 
   
   updateSubTotal(subTotal: number) {
@@ -67,9 +68,9 @@ export class CartService {
    });
    
  }
-  address = [
-    {type:'Office',name:'Pritee Mehta', address:'Odell J. Gabbert 1045 Kildeer DriveNorfolk, VA 23502',},
-    {type:'Home',name:'Pritee Mehta', address:'Thelma E. Rogers 3651 Burton AvenueMemphis, TN 38104'},
-    {type:'Office',name:'Pritee Mehta', address:'Kathleen G. Hogan3516 Layman AvenueFayetteville, NC 28306'}
-  ];
+  // address = [
+  //   {type:'Office',name:'Pritee Mehta', address:'Odell J. Gabbert 1045 Kildeer DriveNorfolk, VA 23502',},
+  //   {type:'Home',name:'Pritee Mehta', address:'Thelma E. Rogers 3651 Burton AvenueMemphis, TN 38104'},
+  //   {type:'Office',name:'Pritee Mehta', address:'Kathleen G. Hogan3516 Layman AvenueFayetteville, NC 28306'}
+  // ];
 }

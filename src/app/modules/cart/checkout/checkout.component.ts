@@ -11,13 +11,16 @@ import { CartService } from 'src/app/shared/services/cartservice/cart.service';
 export class CheckoutComponent {
 total:number=0;
   constructor(private cartService:CartService, private router:Router, private route:ActivatedRoute, private apiService:ApiService){
-    
+    // this.cartService.address$.subscribe(res=>{
+    //   this.addresses = res.data.addresses
+    // })
   }
-  addresses= this.cartService.address;
+  addresses:any;
     ngOnInit(){
       // debugger
   this.apiService.getCartTotal().subscribe((res:any)=>{this.total = res['subTotal']['subtotal'];})
   // this.cartService.subTotal$.subscribe(res=>this.total=res)
+  
     }
     
 placeOrder(){

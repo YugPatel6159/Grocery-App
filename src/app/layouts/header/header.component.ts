@@ -32,6 +32,7 @@ constructor(private service:ProductService,private cartService:CartService, priv
 
   this.cartService.cartItem$.subscribe((res)=>{this.cartLength = res})
   this.cartService.subTotal$.subscribe((res)=>{this.grandTotal=res});
+  this.getCustomerDetails();
   
 }
 

@@ -18,6 +18,7 @@ export class ApiService {
   customerDetails:any;
   edituserDetails = environment.editUserDetails;
   addAddressApi=environment.addAddressToApi;
+  getAllOrdersApi=environment.getOrdersApi;
   registerUser(userData:any){
     const registerUrl = environment.registerUrl;
     this.http.post(this.baseUrl+registerUrl,userData).subscribe(res=>console.log(res),err=>console.log(err));
@@ -89,15 +90,25 @@ export class ApiService {
       return this.http.get(this.addAddressApi);
     }
 
-    deleteAddress(id:number){
-      return this.http.delete(this.addAddressApi+'/'+id)
+    deleteAddress(id:string){
+      return this.http.delete(this.baseUrl+'customer/delete-customer-address',{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*','address_id':id})})
     }
-
+    editAddress(address:any,id:any){
+      console.log(JSON.stringify(id))
+      return this.http.put(this.baseUrl+'customer/update-customer-address',{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*','address_id':id})},address)
+    }
     getAllCategories(){
       return this.http.get(this.baseUrl+this.allCategories,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})});
     }
     editCustomer(userDetails:any){
-      return this.http.put(this.baseUrl+this.edituserDetails,userDetails)
+      return this.http.put(this.baseUrl+this.edituserDetails,userDetails);
+    }
+
+    getAllOrders(){
+      return this.http.get(this.baseUrl+this.getAllOrdersApi,{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'})});
+    }
+    getProductsByCategories(id:string){
+      return this.http.get(this.baseUrl+'product/get-product-by-category-id',{headers: new HttpHeaders({'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*','category_id':id})})
     }
   }
   

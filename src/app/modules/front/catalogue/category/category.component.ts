@@ -40,6 +40,7 @@ export class CategoryComponent implements OnInit {
         this.proService.groceryList,
         this.urlCategory
       );
+      // this.products = this.proService.getProductByCategories();
       this.uniqueItems = this.storesFilterData();
     });
     this.apiService.getAllCategories().subscribe((res:any)=>{

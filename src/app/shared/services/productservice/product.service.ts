@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Grocery } from '../../models/interface';
+import { ApiService } from '../Api service/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(private route:ActivatedRoute) { }
+  constructor(private route:ActivatedRoute, private apiService:ApiService) { }
  
   products = [
     {
@@ -350,7 +351,11 @@ export class ProductService {
       return index === arr.findIndex(t => t.category === item.category);
     });
 
-
+    getProductByCategories(id:any){
+      this.apiService.getProductsByCategories(id).subscribe((res:any)=>{
+        console.log(res);
+      })
+    }
     filteredProducts(duplicateProducts:any, urlCategory:string) {
       if (urlCategory == "All") {
         return duplicateProducts;

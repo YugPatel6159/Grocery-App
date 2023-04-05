@@ -9,5 +9,6 @@ export const environment = {
     addAddress:'customer/add-customer-address',
     addAddressToApi:'http://localhost:3000/address',
     allCategoryUrl:'category/get-all-categories',
-    editUserDetails:'customer/update-customer'
+    editUserDetails:'customer/update-customer',
+    getOrdersApi:"customer/get-customer-all-orders"
 }

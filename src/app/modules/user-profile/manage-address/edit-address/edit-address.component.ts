@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Route } from '@angular/router';
 import { addAddress } from 'src/app/shared/models/addAddress';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
+import { EncryptionService } from 'src/app/shared/services/encryption/encryption.service';
 
 @Component({
   selector: 'app-edit-address',
@@ -146,7 +148,8 @@ export class EditAddressComponent {
       editAddress!:FormGroup;
       stateArr:[]=[]
   addressData!:addAddress;
-  constructor(private fb:FormBuilder, private apiService:ApiService){
+  address: any;
+  constructor(private fb:FormBuilder, private apiService:ApiService, private route:ActivatedRoute, private encryptionService: EncryptionService){
    this.editAddress=this.fb.group({
      address1:['',Validators.required],
      address2:['',Validators.required],
@@ -160,21 +163,30 @@ export class EditAddressComponent {
    }
    )
   }
+  addressId:any
   ngOnInit(){
-    this.apiService.getAddressFromApi().subscribe(res=>{
-      console.log('response',res)
-      this.editAddress.patchValue({
-        address1: 'res.address_line_1',
-        address2: "address.address2",
-        area: "address.area",
-        city: "address.city",
-        state:"address.state",
-        country: "address.country",
-        postalCode: "address.postal_code",
-        landMark:"address.landmark",
-        tag: "address.tag"
-      })
+    this.route.params.subscribe((res)=>{
+      this.addressId = res['id']
     })
+    this.apiService.getUserDetails().subscribe({next:(res:any)=>{
+      console.log('res',res.data.addresses,this.addressId)
+      this.address = res.data.addresses.find((res:any)=>{
+        return res.id==this.addressId 
+      })
+      console.log('city',this.address.city);
+      
+      this.editAddress.patchValue({
+        address1: this.address.address_line_1,
+        address2: this.address.address_line_2,
+        area: this.address.area,
+        city: this.address.city,
+        state:this.address.state,
+        country: this.address.country,
+        postalCode: this.address.postal_code,
+        landMark:this.address.landmark,
+        tag: this.address.tag
+      })
+    }})
   }
   cities:any;
   selectedState(state:any){
@@ -225,13 +237,17 @@ onSave(){
         landmark: this.landMark?.value,
         tag: this.tag?.value
   }
-
-  this.apiService.postAddressData(this.addressData).subscribe(
-    (res:any)=>{
-      console.log(res)
-  },
-  (err:any)=>{
-    console.log(err)
+  console.log('changed Address',this.addressData)
+  this.encryptionService.Encryption(this.addressId).subscribe((res:any)=>{
+    console.log(res);
+    this.apiService.editAddress(this.addressData, res.data).subscribe(
+      {next:(res:any)=>{
+         console.log(res)
+     },
+     error:(err:any)=>{  
+       console.log(err)
+     }})  
   })
+  
 }
 }

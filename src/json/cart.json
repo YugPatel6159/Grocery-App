@@ -1,22 +1,47 @@
 {
-  "cart": [],
+  "cart": [
+    {
+      "id": 2,
+      "grocery_name": "Chicken Breast",
+      "price": 5.99,
+      "discPrice": 4.99,
+      "shop": "XYZ Grocery",
+      "category": "Meat",
+      "quantity": "1 lb",
+      "subtotal": 4.99,
+      "imageUrl": "../../assets/Rectangle 19.png",
+      "quantityCount": 1
+    }
+  ],
   "subTotal": {
     "subTotal": {
-      "subtotal": 0
+      "subtotal": 4.99
     }
   },
   "Address": [
     {
       "address_line_1": "683/A, VIJAYRAJNAGAR, Bhavnagar, Gujarat 364002, India",
       "address_line_2": "683/A RIDDHI SIDDHI",
-      "area": "234",
+      "area": "vijayrajnagar",
       "city": "Bhavnagar",
       "state": "Gujarat",
       "country": "India",
       "postal_code": "364002",
       "landmark": "rto",
       "tag": "home",
-      "id": 6
+      "id": 1
+    },
+    {
+      "address_line_1": "saas",
+      "address_line_2": "sasasa",
+      "area": "sassaa",
+      "city": "Guwahati",
+      "state": "Assam",
+      "country": "asasas",
+      "postal_code": "999999",
+      "landmark": "asas",
+      "tag": "asas",
+      "id": 2
     }
   ]
 }
