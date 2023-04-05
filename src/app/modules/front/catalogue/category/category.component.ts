@@ -45,8 +45,6 @@ export class CategoryComponent implements OnInit {
     this.apiService.getAllCategories().subscribe((res:any)=>{
       console.log(res);
     })
-  
-
     window.scrollTo(0, 0);
   }
 

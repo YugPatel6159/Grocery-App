@@ -100,9 +100,5 @@ if(this.token){
 else{
   this.tokenValue = false
 }
-
 }
-
-
-
 }

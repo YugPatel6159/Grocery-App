@@ -76,8 +76,8 @@ onSave(){
     first_name: this.firstName.value ,
     last_name: this.lastName.value ,
     date_of_birth: this.dob.value ,
-    password: 'yug@1234',
-    secondary_mobile_number: this.altNumber.value ,
+    password: this.password.value,
+    secondary_mobile_number: this.altNumber.value,
     secondary_email: this.altEmail.value
   }
   this.apiService.editCustomer(this.editCustomerDetails).subscribe(
