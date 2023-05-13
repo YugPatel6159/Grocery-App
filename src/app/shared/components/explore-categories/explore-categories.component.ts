@@ -3,44 +3,62 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swiper from 'swiper';
 import { ProductService } from '../../services/productservice/product.service';
 import { ApiService } from '../../services/Api service/api.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-explore-categories',
   templateUrl: './explore-categories.component.html',
   styleUrls: ['./explore-categories.component.css'],
 })
 export class ExploreCategoriesComponent {
-  constructor(private service: ProductService, private route: ActivatedRoute, private router:Router,private apiService:ApiService) {
+  constructor(
+    private service: ProductService,
+    private spinner: NgxSpinnerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
+  ) {
     // this.totalCategories = this.service.categories;
-    this.apiService.getAllCategories().subscribe((data:any)=>{
-      this.totalCategories = data.data
-      console.log('categories',this.totalCategories);
-    })
+    this.apiService.getAllCategories()?.subscribe((data: any) => {
+      if (data) {
+        this.totalCategories = data.data;
+        console.log('categories', this.totalCategories);
+      }
+    });
   }
   exploreCategories = this.service.exploreCategories;
-  totalCategories:any;
+  totalCategories: any;
   categoryName: any;
-  groceryList = this.service.groceryList;
-  countByCategory = this.groceryList.reduce((accumulator: any, currentItem) => {
-    this.categoryName = currentItem.category;
-    accumulator[this.categoryName] = (accumulator[this.categoryName] || 0) + 1;
-    return accumulator;
-  }, {});
-
+  countByCategory:any
+  groceryList = this.apiService.getAllProducts()?.subscribe((res:any)=>{
+    console.log(res.data,'resaefsdaf')
+    this.countByCategory = res.data.reduce((accumulator: any, currentItem) => {
+      console.log(currentItem,'currentIte,')
+      this.categoryName = currentItem.categoryArrayFromBody[0].category.title;
+      accumulator[this.categoryName] = (accumulator[this.categoryName] || 0) + 1;
+      return accumulator;
+    }, {});
+    // return res
+    console.log(this.countByCategory,'this.countByCategory')
+  });
+  
   urlCategory: string = '';
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.urlCategory = params['i'];
     });
-  
-    console.log(this.countByCategory)
+    // console.log(this.countByCategory)
   }
-  allProductsbasedOnCategory(category:any){
-    this.service.searchTerm='';
-    this.route.params.subscribe(params => {
+  allProductsbasedOnCategory(slug: any) {
+    this.service.searchTerm = '';
+    this.route.params.subscribe((params) => {
       // console.log
-      this.router.navigate(['catalogue/categories', category]);
+      this.router.navigate(['catalogue/categories', slug]);
     });
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+    this.router.navigate(['/catalogue/categories', slug]);
   }
 
   ngAfterViewInit() {
@@ -57,5 +75,11 @@ export class ExploreCategoriesComponent {
       },
     });
   }
+  routeToCategoryProducts(slug: any) {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+    this.router.navigate(['/catalogue/categories', slug]);
+  }
 }
-

@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AddAddressComponent } from './manage-address/add-address/add-address.component';
 import { EditAddressComponent } from './manage-address/edit-address/edit-address.component';
+import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
 
 const routes: Routes = [
  {
@@ -31,6 +32,9 @@ const routes: Routes = [
     },
     {
       path:'orders', component:OrdersComponent
+    },
+    {
+      path:'orders/order-detail/:id', component:OrdersDetailsComponent
     }
   ]
 }

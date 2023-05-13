@@ -36,5 +36,15 @@ cursor: pointer;
 }
 .btn{
     background-color:#3BB77E;
+    width: 50%;
+    align-items: center;
+    text-align: center;
 }
-
+.grocery-name{
+    margin-top: 15px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

@@ -20,17 +20,14 @@
             <h3>Top Rated</h3><br>
             <hr class="hr-width">
         </span>
-        <div class="trend-card" *ngFor="let product of topRatedProducts">
+        <div class="trend-card" *ngFor="let category of products">
             <div>
-               <a [routerLink]="['top-rated',product.grocery_name,product.id]"> <img [src]="product.imageUrl" height="101px" width="101px" alt=""></a>
+                <a [routerLink]="['trending-items',category.category]"><img src="../../assets/image 3.png" alt=""></a>
             </div>
             <div>
-                <h6>{{product.grocery_name}}</h6>
-                <h6>{{product.quantity}}</h6>
-                <span class="x">{{product?.discountPrice | currency}} &nbsp;<span class="original-price"
-                    [style.text-decoration]="product.discountPrice ? 'line-through' : 'none'">
-                    {{product.price | currency}}
-                  </span></span>
+                <h6>Orange</h6>
+                <h6>1kg</h6>
+                <span>$2<span class ="line-through">$3.99</span></span>
             </div>
         </div>
     </div>

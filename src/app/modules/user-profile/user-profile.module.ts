@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserProfileRoutingModule } from './user-profile-routing.module';
@@ -11,6 +11,8 @@ import { AddAddressComponent } from './manage-address/add-address/add-address.co
 import { EditAddressComponent } from './manage-address/edit-address/edit-address.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OrdersDetailsComponent } from './orders/orders-details/orders-details.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 // import { SidebarComponent } from './Layouts/sidebar/sidebar.component';
 
 
@@ -22,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ManageAddressComponent,
     ChangePasswordComponent,
     AddAddressComponent,
-    EditAddressComponent
+    EditAddressComponent,
+    OrdersDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
-  ]
+    ToastrModule.forRoot(),
+    NgxSpinnerModule,
+    NgxSpinnerModule.forRoot({ type: 'square-jelly-box' })
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class UserProfileModule { }

@@ -9,7 +9,7 @@ import { ProductService } from '../../services/productservice/product.service';
 export class TrendingItemsComponent {
   constructor(private service:ProductService){}
   
-  topRatedProducts = this.service.sortGroceriesByRating();
+  // topRatedProducts = this.service.sortGroceriesByRating();
   products = [
     {
       img:"../../assets/image 3.png",

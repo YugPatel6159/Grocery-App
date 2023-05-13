@@ -33,6 +33,11 @@
 .card{
     width: 14rem ;
     height: 330px;
+    transition: 0.3s ease-in-out;
+}
+.card:hover{
+    transition:  0.3s ease-in-out;
+    transform: scale(1.1);
 }
 .small{
     align-items: center;
@@ -69,4 +74,9 @@
   
   input[type=checkbox]{
     margin-right: 5px;
+  }
+  .content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }

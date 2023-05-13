@@ -1,39 +1,56 @@
 <div class="category-header">
-  <h2>{{urlCategory}}</h2>
+  <h2>{{ urlCategory }}</h2>
 </div>
 <div class="filter">
   <div class="icon">
-    <i class="fa-solid fa-filter filter"  (click)="display()"></i>
+    <i class="fa-solid fa-filter filter" (click)="display()"></i>
   </div>
-  <div class="options" [style.display]="filterToggle? 'block':'none'" >
-    <p style="text-align: center;">Filter Option</p>
+  <div class="options" [style.display]="filterToggle ? 'block' : 'none'">
+    <p style="text-align: center">Filter Option</p>
     <div class="option">
       <ul>
-        <p style="font-size: 16px;">Brand</p>
-        <li *ngFor="let i of uniqueItems" >
-          <input type="checkbox" (change)="storeArray($event)" #brand name="Brand" id="amul" value="{{i}}">{{i}}</li>
+        <p style="font-size: 16px">Brand</p>
+        <li *ngFor="let i of uniqueItems">
+          <input
+            type="checkbox"
+            #brand
+            name="Brand"
+            id="amul"
+            value="{{ i }}"
+          />{{ i }}
+        </li>
       </ul>
     </div>
   </div>
 </div>
 
-<div class="container" >
-      <div class="card" *ngFor="let i of getProducts()">
-          <a [routerLink]="['product-details',i.grocery_name,i.id]"><img class="card-img-top" [src]="i.imageUrl" alt="Card image cap" /></a>
-          <div class="card-body">
-            <small class="card-title">{{i.category}}</small>
-            <h5 class="grocery-name">{{i.grocery_name}}</h5>
-            <span>☆☆☆☆☆(4)</span>
-            <span class="d-flex small">by&nbsp;<span class="small green">{{i.store}}</span></span>
-            <div class="content">
-              <span class="green">{{i?.discountPrice | currency}} &nbsp;<span class="original-price"
-                [style.text-decoration]="i.discountPrice ? 'line-through' : 'none'">
-                {{i.price | currency}}
-              </span></span>
-              <a class="btn" (click)="addProductToCart(i)"><i class="fas fa-cart-arrow-down"></i>Add</a>
-            </div>
-          </div>
-        </div>
+<div class="container" *ngIf="productByCategory">
+  <div class="card" *ngFor="let i of productByCategory">
+    <img
+      class="card-img-top"
+      [src]="showImage(i.avatar_image)"
+      width="120"
+      height="150"
+      alt="Card image cap"
+      (click)="routeToProductDetails(i.title, i.id)"
+    />
+    <div class="card-body">
+      <h5 class="grocery-name">{{ i.title }}</h5>
+      <span>☆☆☆☆☆(4)</span>
+      <div class="content">
+        <span >{{i?.amount - i?.discount_amount | currency: 'INR'}} &nbsp;<span class="original-price"
+                [style.text-decoration]="i.discount_amount ? 'line-through' : 'none'">
+        {{ i.amount }}
+        </span></span>
+        <a class="btn" (click)="addProductToCart(i)"
+          ><i class="fas fa-cart-arrow-down"></i>Add</a
+        >
       </div>
-
-
+    </div>
+  </div>
+</div>
+<div class="container d-flex justify-content-center" *ngIf="!productByCategory">
+  <h1>No Products Found!</h1>
+</div>
+<app-additional-info></app-additional-info>
+  

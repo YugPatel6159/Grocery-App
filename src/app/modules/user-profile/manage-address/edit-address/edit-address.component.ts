@@ -166,13 +166,18 @@ export class EditAddressComponent {
   addressId:any
   ngOnInit(){
     this.route.params.subscribe((res)=>{
-      this.addressId = res['id']
+      if(res){
+        this.addressId = res['id']
+      }
     })
-    this.apiService.getUserDetails().subscribe({next:(res:any)=>{
-      console.log('res',res.data.addresses,this.addressId)
-      this.address = res.data.addresses.find((res:any)=>{
-        return res.id==this.addressId 
-      })
+    this.apiService.getUserDetails()?.subscribe({next:(res:any)=>{
+      if(res){
+        
+        console.log('res',res.data.addresses,this.addressId)
+        this.address = res.data.addresses.find((res:any)=>{
+          return res.id==this.addressId 
+        })
+      }
       console.log('city',this.address.city);
       
       this.editAddress.patchValue({
@@ -239,14 +244,19 @@ onSave(){
   }
   console.log('changed Address',this.addressData)
   this.encryptionService.Encryption(this.addressId).subscribe((res:any)=>{
-    console.log(res);
-    this.apiService.editAddress(this.addressData, res.data).subscribe(
-      {next:(res:any)=>{
-         console.log(res)
-     },
-     error:(err:any)=>{  
-       console.log(err)
-     }})  
+    if(res){
+
+      console.log(res);
+      this.apiService.editAddress(this.addressData, res.data)?.subscribe(
+        {next:(res:any)=>{
+          if(res){
+            console.log(res)
+          }
+        },
+        error:(err:any)=>{  
+          console.log(err)
+        }})  
+      }
   })
   
 }

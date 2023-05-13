@@ -50,11 +50,15 @@ export class ChangePasswordComponent implements OnInit {
       newPassword:this.newPassword?.value
     }
     if(token!=null){
-      this.apiService.changePassword(this.newchangePassword).subscribe(
-        data=>{console.log(data)
-        this.toastr.success("password changed successfully",'Success')}, 
-        err=>{console.log(err)}
-        );
+      this.apiService.changePassword(this.newchangePassword)?.subscribe(
+        {next:(data:any)=>{
+        if(data){
+
+          console.log(data)
+          this.toastr.success("password changed successfully",'Success')} 
+        },
+        error:(err:any)=>{console.log(err)}
+    });
     }
   }
   

@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { CartComponent } from '../../cart/cart/cart.component';
 import { CheckoutComponent } from '../../cart/checkout/checkout.component';
 import { SuccessComponent } from '../../cart/success/success.component';
+import { AdditionalInfoComponent } from 'src/app/layouts/additional-info/additional-info.component';
+
 
 
 @NgModule({
@@ -15,9 +17,9 @@ import { SuccessComponent } from '../../cart/success/success.component';
     CategoryComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    CartComponent,
     CheckoutComponent,
-    SuccessComponent
+    SuccessComponent,
+    AdditionalInfoComponent
   ],
   imports: [
     CommonModule,

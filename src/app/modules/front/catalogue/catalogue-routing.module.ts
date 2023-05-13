@@ -19,7 +19,7 @@ const routes: Routes = [
     path:'search-categories/:category/product-details/:grocery_name/:id', component:ProductDetailsComponent
   },
   {
-    path:'categories/:category/product-details/:grocery_name/:id', component:ProductDetailsComponent
+    path:'categories/:category/product-details/:title/:id', component:ProductDetailsComponent
   },
   {
     path:'featured-products/:i.grocery_name', component:ProductDetailsComponent

@@ -19,12 +19,10 @@ export class ManageAddressComponent {
     private toastr: ToastrService,
     private _encryptionservice: EncryptionService
   ) {
-    // this.apiService.getAddressFromApi().subscribe((res)=>{
-    //   this.address = res
-    // })
-    this.apiService.getUserDetails().subscribe((res: any) => {
-      this.address = res.data.addresses;
-      // this.cartService.address.next(this.address);
+    this.apiService.getUserDetails()?.subscribe((res: any) => {
+      if(res){
+        this.address = res.data.addresses;
+      }
     });
   }
   deleteAddress(id: any) {
@@ -33,16 +31,20 @@ export class ManageAddressComponent {
 
   encryption_data!: string;
   encryption(id: any) {
-    this._encryptionservice.Encryption(id).subscribe({
+    this._encryptionservice.Encryption(JSON.stringify(id)).subscribe({
       next: (encryption_res) => {
-        console.log('hello');
-        console.log('encryption_res', encryption_res);
-        this.encryption_data = encryption_res.data;
-        console.log('encryption_data', this.encryption_data);
-        console.log(this.encryption_data);
-        this.apiService.deleteAddress(this.encryption_data).subscribe(() => {
-          this.toastr.success('Address Deleted', 'Success');
-        });
+        if(encryption_res){
+
+          console.log('hello');
+          console.log('encryption_res', encryption_res);
+          this.encryption_data = encryption_res.data;
+          console.log('encryption_data', this.encryption_data);
+          console.log(this.encryption_data);
+          this.apiService.deleteAddress(this.encryption_data)?.subscribe(() => {
+            this.toastr.success('Address Deleted', 'Success');
+          });
+        }
+        
       },
       error: (encryption_error) => {
         console.log('encryption_error', encryption_error);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { editCustomer } from 'src/app/shared/models/editCustomer';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
@@ -11,7 +12,7 @@ import { ApiService } from 'src/app/shared/services/Api service/api.service';
 })
 export class ProfileComponent implements OnInit {
   profileForm: any;
- constructor(private fb:FormBuilder,private toastr: ToastrService, private apiService:ApiService){
+ constructor(private fb:FormBuilder,private toastr: ToastrService, private apiService:ApiService,private spinner: NgxSpinnerService){
   this.profileForm=this.fb.group({
     firstName:['',Validators.required],
     lastName:['',Validators.required],
@@ -26,16 +27,23 @@ export class ProfileComponent implements OnInit {
  }
  
  ngOnInit(){
-   this.apiService.getUserDetails().subscribe(
+  this.spinner.show();
+  setTimeout(() => {
+    this.spinner.hide();
+  }, 1000);
+   this.apiService.getUserDetails()?.subscribe(
     {
       next:(data:any)=>{
-        console.log(data.data);
-        this.profileForm.patchValue({
-          firstName:data.data.first_name,
-          lastName:data.data.last_name,
-          email:data.data.primary_email,
-          number:data.data.primary_mobile_number
-        })
+        if(data){
+
+          console.log(data.data);
+          this.profileForm.patchValue({
+            firstName:data.data.first_name,
+            lastName:data.data.last_name,
+            email:data.data.primary_email,
+            number:data.data.primary_mobile_number
+          })
+        }
       },
       error: (err:any)=>
       {
@@ -80,7 +88,7 @@ onSave(){
     secondary_mobile_number: this.altNumber.value,
     secondary_email: this.altEmail.value
   }
-  this.apiService.editCustomer(this.editCustomerDetails).subscribe(
+  this.apiService.editCustomer(this.editCustomerDetails)?.subscribe(
     {
       next:res=>console.log(res),
       error: err=>console.log(err)

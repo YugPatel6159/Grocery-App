@@ -217,23 +217,18 @@ onSave(){
         tag: this.tag?.value
   }
 
-  this.apiService.postAddressData(this.addressData).subscribe(
-    (res:any)=>{
-      console.log(res)
-      this.toastr.success(res.message, 'Success');
-      this.router.navigate(['/profile/manage-Address'])
+  this.apiService.postAddressData(this.addressData)?.subscribe(
+    {next:(res:any)=>{
+      if(res){
+        console.log(res)
+        this.toastr.success(res.message, 'Success');
+        this.router.navigate(['/profile/manage-Address'])
+      }
   },
-  (err:any)=>{
+  error:(err:any)=>{
     console.log(err);
     this.toastr.error(err.error.message, 'Error');
 
-  })
-  this.apiService.addAddressToApi(this.addressData).subscribe(
-    (res:any)=>{
-      console.log(res)
-  },
-  (err:any)=>{
-    console.log(err)
-  })
+  }})
 }
 }

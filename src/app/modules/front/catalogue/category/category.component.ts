@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Route } from '@angular/router';
-import { Grocery } from 'src/app/shared/models/interface';
+import { Route, Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/services/productservice/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/shared/services/cartservice/cart.service';
-import { partition } from 'rxjs';
-import { Location } from '@angular/common';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
-import { ToastrService } from 'ngx-toastr';
+import { EncryptionService } from 'src/app/shared/services/encryption/encryption.service';
 
 @Component({
   selector: 'app-category',
@@ -16,123 +13,159 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoryComponent implements OnInit {
   cartLength: any;
+  productByCategory: any;
+  userId: any;
+  cartToggle: boolean = false;
+  crtArray: any[] = [];
   constructor(
     private route: ActivatedRoute,
     private proService: ProductService,
     private cartService: CartService,
-    private location: Location,
     private apiService: ApiService,
-    private toastr: ToastrService
-  ) { 
-    
-  }
-  products: Grocery[] = this.proService.groceryList;
+    private encryptionService: EncryptionService,
+    private router: Router
+  ) {}
+  product: any;
   urlCategory: string = '';
   uniqueItems: string[] = [];
   filteredProducts = this.proService.filteredProducts;
-  filteredProductsBasedOnCategory =
-    this.proService.filteredProductsBasedOnCategory;
+  filterToggle: boolean = false;
 
   ngOnInit() {
+    this.proService.onFilterProducts.subscribe((filteredProducts: any[]) => {
+      this.productByCategory = filteredProducts;
+    });
     this.route.params.subscribe((params) => {
       this.urlCategory = params['i'];
-      this.products = this.filteredProducts(
-        this.proService.groceryList,
-        this.urlCategory
-      );
-      // this.products = this.proService.getProductByCategories();
-      this.uniqueItems = this.storesFilterData();
+      if (this.urlCategory == 'All' || this.urlCategory == '') {
+        this.allCategory();
+      } else {
+        this.otherThanAllCategory(); // this.getProductByCategories(this.urlCategory);
+      }
     });
-    this.apiService.getAllCategories().subscribe((res:any)=>{
-      console.log(res);
-    })
+    this.getAllCategories();
     window.scrollTo(0, 0);
   }
 
-  //  this function is for unique stores from filtered stores
-
-  storesFilterData() {
-    const stores: string[] = [];
-    const products = this.getProducts();
-    products.forEach((element: any) => {
-      if (!stores.includes(element.store)) {
-        stores.push(element.store);
+  getAllCategories() {
+    this.apiService.getAllCategories()?.subscribe((res: any) => {
+      if (res) {
+        console.log(res.data,'categories from filter');
+        this.uniqueItems = res.data;
+        console.log(this.uniqueItems,'unique items');
       }
     });
-    console.log(stores);
-    return stores;
   }
 
-  selectedStore: string[] = [];
 
-  // this function is for checkbox
-
-  storeArray(event: any) {
-    const brandValue = event.target.value;
-
-    // if users check the checkbox
-
-    if (event.target.checked) {
-      this.selectedStore.push(brandValue);
-      console.log('selected store from filter', this.selectedStore);
-    }
-
-    // if user uncheck
-    else {
-      const index = this.selectedStore.indexOf(brandValue);
-      if (index > -1) {
-        this.selectedStore.splice(index, 1);
+  allCategory() {
+    this.apiService.getAllProducts()?.subscribe((res: any) => {
+      if (res) {
+        console.log('res.data', res.data);
+        if (this.proService.searchTerm) {
+          // this.productByCategory = this.proService.filterProducts(this.proService.searchTerm,);;
+          console.log(this.productByCategory, 'from aqall');
+        } else {
+          this.productByCategory = res.data;
+          console.log('else');
+        }
       }
-    }
-
-    //  if length of an array is 0 then this condition
-
-    if (this.selectedStore.length === 0) {
-      this.products = this.filteredProducts(
-        this.proService.groceryList,
-        this.urlCategory
-      );
-    }
-
-    //  if not zero then this condition
-    else {
-      this.products = this.proService.groceryList.filter((product) => {
-        return this.selectedStore.indexOf(product.store) !== -1;
-      });
-    }
+    });
   }
 
-  getProducts() {
-    let products = this.products;
-    const { selectedCategory, searchTerm } = this.proService;
-    if (selectedCategory) {
-      products = products.filter(({ category }) => category === selectedCategory);
-    }
-    if (searchTerm) {
-      products = products.filter(({ grocery_name }) =>
-        grocery_name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    return products;
+  otherThanAllCategory() {
+    let categories;
+    this.apiService.getAllCategories()?.subscribe((res: any) => {
+      if (res) {
+        categories = res.data;
+        console.log('res-data', res.data);
+        let categoryId: any;
+        categories.find((category: any) => {
+          if (category.slug == this.urlCategory) {
+            categoryId = category.id;
+            console.log(categoryId);
+            this.encryptionService
+              .Encryption(JSON.stringify(categoryId))
+              .subscribe((res) => {
+                if (res) {
+                  categoryId = res.data;
+                }
+                if (!this.proService.searchTerm) {
+                  this.apiService
+                    .getProductsByCategories(categoryId)
+                    .subscribe((product: any) => {
+                      if (product) {
+                        this.productByCategory = product.data.map(
+                          (product: any) => {
+                            return product.product;
+                          }
+                        );
+                      }
+                    });
+                } else {
+                  this.productByCategory =
+                    this.proService.filteredProductsBasedOnCategory;
+                }
+                console.log('this.product', this.productByCategory);
+              });
+          }
+        });
+      }
+    });
   }
-  
+
+  getProductByCategories(id: any) {
+    this.encryptionService.Encryption(id).subscribe((res: any) => {
+      if (res) {
+        this.apiService
+          .getProductsByCategories(res.data)
+          .subscribe((res: any) => {
+            if (res) {
+              console.log('category wise', res.data);
+              this.productByCategory = res.data;
+            }
+          });
+      }
+    });
+  }
+
+  routeToProductDetails(id: any, title: any) {
+    this.router.navigate(['/product-details', id, title]);
+  }
 
   // this is for displaying filter box
 
-  filterToggle: boolean = false;
   display() {
     this.filterToggle = !this.filterToggle;
   }
 
-  // add products to cart
-  cartArray: any;
+  getUserDetails(product: any) {
+    this.apiService.getUserDetails()?.subscribe({
+      next: (data: any) => {
+        if (data) {
+          console.log(data);
+          this.userId = data.data.id;
+          console.log(this.userId, 'userid from category');
+          this.cartService.addProductToCart(product, this.userId);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+  showImage(img: any) {
+    return 'http://localhost:8080/api/v1/get-image/' + img;
+  }
 
-  // add product to cart in product.json
-  finalSubTotal: number = 0;
-  totalPrice=0;
-  cartProducts:Grocery[]=[];
-  addProductToCart(product: Grocery) {
-    this.cartService.addProductToCart(product);
-
+  addProductToCart(product: any) {
+    let cart = JSON.parse(localStorage.getItem('Cart'));
+    let username = localStorage.getItem('user');
+    console.log(cart, 'cart');
+    let matchedUser = cart.find((res: any) => {
+      return res.username === username;
+    });
+    console.log(matchedUser, 'matchedUser');
+    this.cartService.getProducts(product, username);
   }
 }

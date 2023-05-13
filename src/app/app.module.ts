@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserProfileModule } from './modules/user-profile/user-profile.module';
 import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
-;
+import { NgxSpinnerModule } from "ngx-spinner";
+// import { ConfirmBoxConfigModule, NgxAwesomePopupModule } from '@costlydeveloper/ngx-awesome-popup';
+// import { AdditionalInfoComponent } from './layouts/additional-info/additional-info.component';
+// ;
 
 
 
@@ -33,6 +36,7 @@ import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor'
     ExploreCategoriesComponent,
     FeaturedProductsComponent,
     TrendingItemsComponent,
+    // AdditionalInfoComponent,
 
   ],
   imports: [
@@ -45,8 +49,13 @@ import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor'
     FormsModule,
     HttpClientModule,
     UserProfileModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSpinnerModule,
+    NgxSpinnerModule.forRoot({ type: 'square-jelly-box' }),
+    // NgxAwesomePopupModule.forRoot(), 
+    // ConfirmBoxConfigModule.forRoot()
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

@@ -1,47 +1,42 @@
 {
-  "cart": [
+  "users": [
     {
-      "id": 2,
-      "grocery_name": "Chicken Breast",
-      "price": 5.99,
-      "discPrice": 4.99,
-      "shop": "XYZ Grocery",
-      "category": "Meat",
-      "quantity": "1 lb",
-      "subtotal": 4.99,
-      "imageUrl": "../../assets/Rectangle 19.png",
-      "quantityCount": 1
-    }
-  ],
-  "subTotal": {
-    "subTotal": {
-      "subtotal": 4.99
-    }
-  },
-  "Address": [
-    {
-      "address_line_1": "683/A, VIJAYRAJNAGAR, Bhavnagar, Gujarat 364002, India",
-      "address_line_2": "683/A RIDDHI SIDDHI",
-      "area": "vijayrajnagar",
-      "city": "Bhavnagar",
-      "state": "Gujarat",
-      "country": "India",
-      "postal_code": "364002",
-      "landmark": "rto",
-      "tag": "home",
-      "id": 1
+      "customerId": 51,
+      "cart": [
+        {
+          "id": 2,
+          "grocery_name": "product-2",
+          "price": 100,
+          "discPrice": 0,
+          "quantity": 1,
+          "subtotal": 100,
+          "quantityCount": 1
+        },
+        {
+          "id": 3,
+          "grocery_name": "product-3",
+          "price": 70,
+          "discPrice": 0,
+          "quantity": 1,
+          "subtotal": 70,
+          "quantityCount": 1
+        },
+        {
+          "id": 4,
+          "grocery_name": "product-4",
+          "price": 150,
+          "discPrice": 0,
+          "quantity": 1,
+          "subtotal": 150,
+          "quantityCount": 1
+        }
+      ],
+      "id": 2
     },
     {
-      "address_line_1": "saas",
-      "address_line_2": "sasasa",
-      "area": "sassaa",
-      "city": "Guwahati",
-      "state": "Assam",
-      "country": "asasas",
-      "postal_code": "999999",
-      "landmark": "asas",
-      "tag": "asas",
-      "id": 2
+      "customerId": 53,
+      "cart": [],
+      "id": 3
     }
   ]
 }

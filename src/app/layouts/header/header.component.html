@@ -1,4 +1,4 @@
-  <nav class="main">
+  <nav class="main" >
     <div class="container d-flex">
       <div class="logoPart">
         <a class="navbar-brand" routerLink="">
@@ -9,7 +9,7 @@
       <div class="searchPart d-flex ">
         <select name="categories" id="" class="form-select border border-end-0 rounded-0 categoriesPart"(change)="categoryChange($event)">
           <option value="All" selected >All categories</option>
-          <option *ngFor="let i of uniqueCategories" value="{{i.category}}" >{{i.category}}</option>
+          <option *ngFor="let i of uniqueCategories" value="{{i.title}}" >{{i.title}}</option>
         </select>
         <input  class="form-control border border-start-0 rounded-0 search-input"type="text" name="search" placeholder="search for items" [(ngModel)]="searchTerm">
         
@@ -26,7 +26,7 @@
          <select name="" id="" style="font-size: 12px;" class="border-none">
           <option value="myCart" selected style="font-size: 12px;">My cart</option>
          </select>
-          <span style="font-size: 12px;">{{grandTotal|currency}}</span>
+          <span style="font-size: 12px;">{{grandTotal | currency: 'INR'}}</span>
         </div>
       </div>
       <!-- <div class="userPart">
@@ -55,6 +55,9 @@
         <!-- <a [routerLink]="['categories/All']"> -->
           <button class="btn btn-success rounded-0" (click)="allCategories()">
             <i class="fa-solid fa-grid-2"></i> Browse all categories
+            <ngx-spinner>
+              <img src="../../../../assets/ZZ5H.gif" width="100px" height="100px" alt="">
+          </ngx-spinner>
           </button>
         <!-- </a> -->
       </div>

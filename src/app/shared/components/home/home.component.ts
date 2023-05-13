@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { ExploreCategoriesComponent } from '../explore-categories/explore-categories.component';
-import { FeaturedProductsComponent } from '../featured-products/featured-products.component';
-import { TrendingItemsComponent } from '../trending-items/trending-items.component';
+import { NgxSpinnerService } from "ngx-spinner";
+import { CartService } from '../../services/cartservice/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +8,17 @@ import { TrendingItemsComponent } from '../trending-items/trending-items.compone
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  constructor(private spinner: NgxSpinnerService,private cartService:CartService) {}
 ngOnInit(){
+  this.spinner.show();
+  setTimeout(() => {
+    this.spinner.hide();
+  }, 1000);
   window.scrollTo(0,0);
+  
+  let username=(localStorage.getItem('user'))
+  console.log("username",username)
 }
+
+
 }

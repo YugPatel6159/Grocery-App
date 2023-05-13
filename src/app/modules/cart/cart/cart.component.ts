@@ -5,6 +5,10 @@ import { ProductService } from 'src/app/shared/services/productservice/product.s
 import { CartItem } from 'src/app/shared/models/cartItemInterface';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/Api service/api.service';
+import { NgxSpinnerService } from "ngx-spinner";
+import { ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
+import { confirmBoxCoreConfig } from '@costlydeveloper/ngx-awesome-popup/ngx-awesome-popup/types/confirm-box/core/classes';
+
 
 @Component({
   selector: 'app-cart',
@@ -16,18 +20,26 @@ export class CartComponent implements OnInit{
   productByCategory: any;
   totalPrice: any;
   cartLength: any;
+  matchedCustomer: any;
+  matchedCustomerCart: any;
+  cartArray: any;
   constructor(
-    private service: ProductService,
     private cartService: CartService,
-    private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiService
+    private spinner: NgxSpinnerService
   ) {
-    this.cartData();
-  }
-  finalSubTotal: number = 0;
-  cartApiData: any;
-  ngOnInit() {
+
+
+}
+finalSubTotal!:number;
+cartApiData: any;
+ngOnInit() {
+  this.cartData();
+  this.subtotalAndlength();
+  this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
   }
 
   productByCategories() {
@@ -52,101 +64,72 @@ export class CartComponent implements OnInit{
       {}
     );
   }
-
-  cartData() {
-    this.apiService.getCartData().subscribe((res) => {
-      this.cartApiData = res;
-      this.productByCategories();
-      this.cartCheckoutPrice();
-    });
-
+  subtotalAndlength() {
+    this.finalSubTotal = JSON.parse(localStorage.getItem('finalSubTotal'))
+    this.cartService.subTotal$.subscribe((res:any)=>{
+      if(res){
+        this.finalSubTotal=res
+      }
+    })
   }
+  cartData() {
+    let cart = JSON.parse(localStorage.getItem('Cart'));
+    let username = localStorage.getItem('user');
+    console.log(cart,'cart')
+    let matchedUser = cart.find((res:any)=>{
+      return res.username === username
+    })
+    if(matchedUser){
+      this.matchedCustomerCart = matchedUser.items
+      console.log(matchedUser,'matchedUser')
+      console.log(matchedUser.items,'matcheddCart')
+      console.log(this.matchedCustomerCart,'mtchecart')
+    }
+  }
+
   // for checkout price
   cartCheckoutPrice() {
-    console.log("call");
-    const subTotal = this.cartApiData.map((product: any) => product.subtotal);
-    this.finalSubTotal = subTotal.reduce((acc: number, curr: number) => {
-      return acc + curr;
-    }, 0);
     console.log('fial', this.finalSubTotal)
-    this.apiService.updateCartTotal(this.finalSubTotal)
-    this.cartService.updateSubTotal(this.finalSubTotal);
   }
 
   // increase count
   plus(products: any) {
-    let product = this.cartApiData.find((res: any) => {
-      return res.id === products.id;
-    });
-
-    if (product.quantityCount >= 0) {
-      product.quantityCount += 1;
-      if (product.discPrice) {
-        product.subtotal = product.quantityCount * product.discPrice;
-      } else {
-        product.subtotal = product.quantityCount * product.price;
-      }
-    }
-    if(product.discPrice==null){
-      this.productByCategory[product.category].totalPrice=this.productByCategory[product.category].totalPrice+product.price;
-    }
-    else{
-      this.productByCategory[product.category].totalPrice=this.productByCategory[product.category].totalPrice+product.discPrice;
-
-    }
-    this.apiService.updateCartData(products.id, product.quantityCount, product.subtotal);
-    this.cartCheckoutPrice();
+    let username = localStorage.getItem('user')
+    this.cartService.Quantity_Plus(username, products);
+    this.subtotalAndlength();
+    this.cartData();
   }
 
-  // decrrease count
+  // decrease count
   minus(products: any) {
-    let product = this.cartApiData.find((res: any) => {
-      return res.id === products.id;
-    });
-    if (product.quantityCount >= 1) {
-      product.quantityCount -= 1;
-      if (product.discPrice) {
-        product.subtotal = product.quantityCount * product.discPrice;
-      } else {
-        product.subtotal = product.quantityCount * product.price;
-      }
-    }
-    // this.productByCategories()
-    if(product.discPrice==null){
-      this.productByCategory[product.category].totalPrice=this.productByCategory[product.category].totalPrice-product.price;
-    }
-    else{
-      this.productByCategory[product.category].totalPrice=this.productByCategory[product.category].totalPrice-product.discPrice;
-
-    }
-
-    this.apiService.updateCartData(products.id, product.quantityCount, product.subtotal);
-    this.cartCheckoutPrice();
+    let username = localStorage.getItem('user')
+    this.cartService.Quantity_Minus(username,products)
+    this.subtotalAndlength();
+    this.cartData();
   }
 
   // remove product
 
   removeProduct(product: any){
-    const categoryArray = this.productByCategory[product.category];
-    this.apiService.deleteCartData(product.id).subscribe(()=>{
-      this.apiService.getCartData().subscribe(cartArray =>{
-        this.cartApiData = cartArray
-        this.cartService.cartItem.next(this.cartApiData.length)
-        console.log("after remove of product",this.cartApiData)
-      });
-    });
-
-    const index = categoryArray.indexOf(product);
-    if (index > -1) {
-      categoryArray.splice(index, 1);
-      this.productByCategory[product.category].totalPrice -= product.price;
-    }
-    this.finalSubTotal = this.finalSubTotal - product.subtotal
-    this.apiService.updateCartTotal(this.finalSubTotal)
-    this.cartService.subTotal.next(this.finalSubTotal);
+      if(confirm('are you sure you want to delete?')){
+        let userName = localStorage.getItem('user')
+        let cart = JSON.parse(localStorage.getItem('Cart'))
+        let matchedUserCart = cart.find((res:any)=>userName === res.username).items
+        console.log(matchedUserCart,'matchedUserCart')
+        const index = matchedUserCart.findIndex((res:any)=>res.id === product.id);
+        console.log(index,'index')
+        this.matchedCustomerCart.splice(index, 1);
+        this.cartService.Delete_Cart_LocalStorage(userName,product);
+        console.log(cart,'cart')
+        this.subtotalAndlength();
+      }
   }
 
   routeToCheckout() {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.router.navigate(['cart/checkout']);
   }
 }
